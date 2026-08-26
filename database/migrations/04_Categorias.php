@@ -12,10 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('categorias', function (Blueprint $table) {
-            $table->id();
-            $table->string('nombre')->unique();
+            // id_categoria (Clave primaria autoincrementable BIGINT)
+            $table->id('id_categoria');
+
+            // nombre (VARCHAR 100, NOT NULL - RQF017, RQF018)
+            $table->string('nombre', 100);
+
+            // descripcion (TEXT, opcional / nullable)
             $table->text('descripcion')->nullable();
-            $table->boolean('estado')->default(true);
+
+            // timestamps (created_at / updated_at)
             $table->timestamps();
         });
     }
