@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Entrada extends Model
 {
     use HasFactory; 
-
     protected $table = "entradas";
 
     protected $primaryKey = "id_entrada"; 
@@ -33,4 +32,5 @@ class Entrada extends Model
     {
         return $this->belongsTo(Proveedor::class, 'id_proveedor', 'id_proveedor');
     }
+
 }
