@@ -24,7 +24,7 @@ return new class extends Migration
             // total (decimal, 10, 2)
             $table->decimal('total', 10, 2);
 
-            // timestamps (created_at / updated_at)
+            // timestamps 
             $table->timestamps();
         });
     }

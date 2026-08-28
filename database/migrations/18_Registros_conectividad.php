@@ -21,7 +21,7 @@ return new class extends Migration
             // Momento exacto del chequeo de conectividad (TIMESTAMP, Not Null)
             $table->timestamp('fecha_registro');
 
-            // Timestamps: created_at (Fecha de creación) y updated_at (Fecha de actualización)
+            //created_at (Fecha de creación) y updated_at (Fecha de actualización)
             $table->timestamps();
         });
     }

@@ -26,7 +26,7 @@ return new class extends Migration
                   ->constrained('maquinas', 'id_maquina')
                   ->onDelete('cascade');
 
-            // Timestamps: created_at (Fecha de registro inicial) y updated_at (Fecha de actualización)
+            // created_at (Fecha de registro inicial) y updated_at (Fecha de actualización)
             $table->timestamps();
         });
     }

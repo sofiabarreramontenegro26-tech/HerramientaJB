@@ -32,7 +32,7 @@ return new class extends Migration
                   ->constrained('maquinas', 'id_maquina')
                   ->onDelete('cascade');
 
-            // Timestamps: created_at (Fecha y hora de guardado) y updated_at (Fecha de edición)
+            //created_at (Fecha y hora de guardado) y updated_at (Fecha de edición)
             $table->timestamps();
         });
     }

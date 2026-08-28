@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('nombre_completo', 100);
             $table->string('correo', 100)->unique();
             $table->string('contraseña', 255);
-            $table->foreignId('id_rol')->nullable()->constrained('roles', 'id_rol')->onDelete('set null');
+            $table->foreignId('id_rol')->nullable()->constrained('roles', 'id_rol')->onDelete('set null'); // Llave foranea
             $table->timestamps();
         });
     }
