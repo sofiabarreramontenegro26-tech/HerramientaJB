@@ -15,7 +15,4 @@ class MovimientoInventario extends Model
         
     ];
 
-    protected $casts = [
-        
-    ];
 }
