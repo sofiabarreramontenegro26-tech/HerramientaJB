@@ -26,7 +26,7 @@ return new class extends Migration
                   ->constrained('proveedores', 'id_proveedor')
                   ->onDelete('cascade');
 
-            // created_at y updated_at (TIMESTAMP, Nulo)
+            // created_at y updated_at 
             $table->timestamps();
         });
     }

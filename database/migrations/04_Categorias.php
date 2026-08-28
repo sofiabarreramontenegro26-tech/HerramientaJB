@@ -21,7 +21,7 @@ return new class extends Migration
             // descripcion (TEXT, opcional / nullable)
             $table->text('descripcion')->nullable();
 
-            // timestamps (created_at / updated_at)
+            // timestamps hace dos
             $table->timestamps();
         });
     }

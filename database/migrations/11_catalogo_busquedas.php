@@ -24,7 +24,7 @@ return new class extends Migration
             // created_at y updated_at (TIMESTAMP, NULLABLE)
             $table->timestamps();
 
-            // Definición de la Clave Foránea (FK) relacionando la tabla productos
+            // Definición de la Clave Foránea (FK)
             $table->foreign('id_producto')
                   ->references('id_producto')
                   ->on('productos')

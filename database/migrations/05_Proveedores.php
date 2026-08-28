@@ -24,7 +24,7 @@ return new class extends Migration
             // empresa (VARCHAR 100, opcional / nullable - Nombre formal de la compañía)
             $table->string('empresa', 100)->nullable();
 
-            // timestamps (created_at / updated_at - Fechas de registro y actualización)
+            // timestamps (created_at / updated_at)
             $table->timestamps();
         });
     }

@@ -21,7 +21,7 @@ return new class extends Migration
                   ->constrained('usuarios', 'id_usuario')
                   ->nullOnDelete();
 
-            // FK Referencia al producto marcado como favorito (requerido / Not Null)
+            // FK Referencia al producto marcado como favorito
             $table->foreignId('id_producto')
                   ->constrained('productos', 'id_producto')
                   ->onDelete('cascade');

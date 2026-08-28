@@ -18,7 +18,7 @@ return new class extends Migration
                   ->constrained('productos')
                   ->onDelete('cascade');
 
-            // Mensaje de la alerta (RQF010, RQF015)
+            // Mensaje de la alerta 
             $table->string('mensaje');
 
   

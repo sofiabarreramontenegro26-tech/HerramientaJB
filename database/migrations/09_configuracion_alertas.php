@@ -18,7 +18,7 @@ return new class extends Migration
             // INT, NOT NULL, Default 2
             $table->integer('dias_anticipacion_entrega')->default(2);
 
-            // created_at y updated_at (TIMESTAMP, NULLABLE por defecto en Laravel)
+            // created_at y updated_at 
             $table->timestamps();
         });
     }

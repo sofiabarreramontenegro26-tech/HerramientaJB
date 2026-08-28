@@ -50,7 +50,7 @@ return new class extends Migration
                   ->constrained('proveedores', 'id_proveedor')
                   ->nullOnDelete();
 
-            // timestamps (created_at / updated_at - Fecha de registro y actualización)
+            // timestamps (created_at / updated_at)
             $table->timestamps();
         });
     }

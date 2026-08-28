@@ -17,7 +17,7 @@ return new class extends Migration
                   ->constrained('usuarios', 'id_usuario')
                   ->onDelete('cascade');
                   
-            $table->timestamps(); // created_at, updated_at TIMESTAMP NULL
+            $table->timestamps(); // created_at, updated_at
         });
     }
 
