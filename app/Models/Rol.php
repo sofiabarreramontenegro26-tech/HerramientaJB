@@ -2,22 +2,22 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Rol extends Model
 {
-    use HasFactory; // HasFactory se va a encargar de crear datos de prueba
+    use HasFactory;
 
-    protected $table = 'roles';
+    protected $table = "roles";
 
-    protected $primaryKey = 'id_rol';
+    protected $primaryKey = "id_rol";
 
-    protected $fillable = ['nombre',];
+    protected $fillable = [
+        "nombre"
+    ];
 
-    // Relaciones
-    public function usuarios(): HasMany
+    public function usuarios()
     {
         return $this->hasMany(Usuario::class, 'id_rol', 'id_rol');
     }
