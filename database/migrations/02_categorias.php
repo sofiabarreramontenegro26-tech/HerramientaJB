@@ -18,7 +18,7 @@ return new class extends Migration
             // nombre (VARCHAR 100, NOT NULL - RQF017, RQF018)
             $table->string('nombre', 100);
 
-            // descripcion (TEXT, opcional / nullable)
+            // descripcion
             $table->text('descripcion')->nullable();
 
             // timestamps hace dos
