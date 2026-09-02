@@ -11,15 +11,4 @@ class CotizacionRepository extends BaseRepository implements CotizacionInterface
     {
         parent::__construct($model);
     }
-
-    public function getByClienteTelefono(string $telefono)
-    {
-        $cotizaciones = $this->model->where('cliente_telefono', $telefono)->get();
-
-        if ($cotizaciones->isEmpty()) {
-            return null;
-        }
-
-        return $cotizaciones;
-    }
 }

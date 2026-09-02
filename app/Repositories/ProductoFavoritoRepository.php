@@ -11,26 +11,4 @@ class ProductoFavoritoRepository extends BaseRepository implements ProductoFavor
     {
         parent::__construct($model);
     }
-
-    public function getByUsuarioId(int $idUsuario)
-    {
-        $favoritos = $this->model->where('id_usuario', $idUsuario)->get();
-
-        if ($favoritos->isEmpty()) {
-            return null;
-        }
-
-        return $favoritos;
-    }
-
-    public function getByProductoId(int $idProducto)
-    {
-        $favoritos = $this->model->where('id_producto', $idProducto)->get();
-
-        if ($favoritos->isEmpty()) {
-            return null;
-        }
-
-        return $favoritos;
-    }
 }
