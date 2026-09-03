@@ -34,14 +34,4 @@ class UsuarioService
     {
         return $this->usuarioRepository->delete($id);
     }
-
-    public function findByCorreo(string $correo)
-    {
-        return $this->usuarioRepository->getByCorreo($correo);
-    }
-
-    public function findByRolId(int $idRol)
-    {
-        return $this->usuarioRepository->getByRolId($idRol);
-    }
 }
