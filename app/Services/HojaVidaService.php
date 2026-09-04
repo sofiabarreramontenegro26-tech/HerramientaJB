@@ -34,9 +34,4 @@ class HojaVidaService
     {
         return $this->hojaVidaRepository->delete($id);
     }
-
-    public function findByMaquinaId(int $idMaquina)
-    {
-        return $this->hojaVidaRepository->getByMaquinaId($idMaquina);
-    }
 }

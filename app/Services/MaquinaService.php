@@ -34,14 +34,4 @@ class MaquinaService
     {
         return $this->maquinaRepository->delete($id);
     }
-
-    public function findByProveedorId(int $idProveedor)
-    {
-        return $this->maquinaRepository->getByProveedorId($idProveedor);
-    }
-
-    public function findByReferencia(string $referencia)
-    {
-        return $this->maquinaRepository->getByReferencia($referencia);
-    }
 }
