@@ -34,14 +34,4 @@ class ProductoFavoritoService
     {
         return $this->productoFavoritoRepository->delete($id);
     }
-
-    public function findByUsuarioId(int $idUsuario)
-    {
-        return $this->productoFavoritoRepository->getByUsuarioId($idUsuario);
-    }
-
-    public function findByProductoId(int $idProducto)
-    {
-        return $this->productoFavoritoRepository->getByProductoId($idProducto);
-    }
 }
