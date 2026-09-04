@@ -2,23 +2,20 @@
 
 namespace App\Services;
 
-use App\Interfaces\MovimientoInventarioInterface;
-use DateTimeInterface;
-
-class MovimientoInventarioService
+class EntradaService
 {
     public function __construct(
         private MovimientoInventarioInterface $movimientoInventarioRepository
-    ){}
+    ) {}
 
-    public function list()
+    public function all()
     {
-        return $this->movimientoInventarioRepository->all();
+        return $this->movimientoInventarioRepository->getAll();
     }
 
     public function show(int $id)
     {
-        return $this->movimientoInventarioRepository->find($id);
+        return $this->movimientoInventarioRepository->getById($id);
     }
 
     public function store(array $data)
@@ -35,5 +32,4 @@ class MovimientoInventarioService
     {
         return $this->movimientoInventarioRepository->delete($id);
     }
-
 }
