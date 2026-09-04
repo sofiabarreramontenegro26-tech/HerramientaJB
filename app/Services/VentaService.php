@@ -34,19 +34,4 @@ class VentaService
     {
         return $this->ventaRepository->delete($id);
     }
-
-    public function findByUsuarioId(int $idUsuario)
-    {
-        return $this->ventaRepository->getByUsuarioId($idUsuario);
-    }
-
-    public function findByCliente(string $cliente)
-    {
-        return $this->ventaRepository->getByCliente($cliente);
-    }
-
-    public function findByRangoFechas(string $fechaInicio, string $fechaFin)
-    {
-        return $this->ventaRepository->getByRangoFechas($fechaInicio, $fechaFin);
-    }
 }

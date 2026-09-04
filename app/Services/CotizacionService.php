@@ -34,9 +34,4 @@ class CotizacionService
     {
         return $this->cotizacionRepository->delete($id);
     }
-
-    public function findByClienteTelefono(string $telefono)
-    {
-        return $this->cotizacionRepository->getByClienteTelefono($telefono);
-    }
 }
