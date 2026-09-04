@@ -34,5 +34,4 @@ class ConfiguracionAlertaService
     {
         return $this->configuracionAlertaRepository->delete($id);
     }
-
 }
