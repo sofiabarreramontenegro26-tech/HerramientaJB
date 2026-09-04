@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Services;
+
+class EntradaService
+{
+    public function __construct(
+        private ConfiguracionAlertaInterface $configuracionAlertaRepository
+    ) {}
+
+    public function all()
+    {
+        return $this->configuracionAlertaRepository->getAll();
+    }
+
+    public function show(int $id)
+    {
+        return $this->configuracionAlertaRepository->getById($id);
+    }
+
+    public function store(array $data)
+    {
+        return $this->configuracionAlertaRepository->create($data);
+    }
+
+    public function update(int $id, array $data)
+    {
+        return $this->configuracionAlertaRepository->update($id, $data);
+    }
+
+    public function destroy(int $id)
+    {
+        return $this->configuracionAlertaRepository->delete($id);
+    }
+}
