@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
-class EntradaService
+use App\Interfaces\RolInterface;
+
+class AlertaInventarioService
 {
     public function __construct(
         private AlertaInventarioInterface $alertaInventarioRepository

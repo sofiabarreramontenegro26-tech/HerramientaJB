@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-class EntradaService
+class MovimientoInventarioService
 {
     public function __construct(
         private MovimientoInventarioInterface $movimientoInventarioRepository
