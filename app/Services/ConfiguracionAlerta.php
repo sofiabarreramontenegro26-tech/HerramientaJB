@@ -35,13 +35,4 @@ class ConfiguracionAlertaService
         return $this->configuracionAlertaRepository->delete($id);
     }
 
-    public function getByDiasAnticipacionEntrega(int $dias)
-    {
-        return $this->configuracionAlertaRepository->getByDiasAnticipacionEntrega($dias);
-    }
-
-    public function getUltimaConfiguracion()
-    {
-        return $this->configuracionAlertaRepository->getUltimaConfiguracion();
-    }
 }

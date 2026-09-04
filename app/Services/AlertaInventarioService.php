@@ -2,20 +2,22 @@
 
 namespace App\Services;
 
-class EntradaService
+use App\Interfaces\AlertaInventarioInterface;
+
+class AlertaInventarioService
 {
     public function __construct(
         private AlertaInventarioInterface $alertaInventarioRepository
-    ) {}
+    ){}
 
-    public function all()
+    public function list()
     {
-        return $this->alertaInventarioRepository->getAll();
+        return $this->alertaInventarioRepository->all();
     }
 
     public function show(int $id)
     {
-        return $this->alertaInventarioRepository->getById($id);
+        return $this->alertaInventarioRepository->find($id);
     }
 
     public function store(array $data)
@@ -31,5 +33,25 @@ class EntradaService
     public function destroy(int $id)
     {
         return $this->alertaInventarioRepository->delete($id);
+    }
+
+    public function getByProducto(int $idProducto)
+    {
+        return $this->alertaInventarioRepository->getByProducto($idProducto);
+    }
+
+    public function getByEstadoLeido(bool $leido)
+    {
+        return $this->alertaInventarioRepository->getByEstadoLeido($leido);
+    }
+
+    public function getNoLeidas()
+    {
+        return $this->alertaInventarioRepository->getNoLeidas();
+    }
+
+    public function marcarComoLeida(int $idAlerta)
+    {
+        return $this->alertaInventarioRepository->marcarComoLeida($idAlerta);
     }
 }
