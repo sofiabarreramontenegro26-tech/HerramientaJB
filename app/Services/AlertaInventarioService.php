@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Interfaces\RolInterface;
+use App\Interfaces\AlertaInventarioInterface;
 
 class AlertaInventarioService
 {
