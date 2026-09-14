@@ -8,16 +8,16 @@ class AlertaInventarioService
 {
     public function __construct(
         private AlertaInventarioInterface $alertaInventarioRepository
-    ){}
+    ) {}
 
-    public function list()
+    public function all()
     {
-        return $this->alertaInventarioRepository->all();
+        return $this->alertaInventarioRepository->getAll();
     }
 
     public function show(int $id)
     {
-        return $this->alertaInventarioRepository->find($id);
+        return $this->alertaInventarioRepository->getById($id);
     }
 
     public function store(array $data)
@@ -33,25 +33,5 @@ class AlertaInventarioService
     public function destroy(int $id)
     {
         return $this->alertaInventarioRepository->delete($id);
-    }
-
-    public function getByProducto(int $idProducto)
-    {
-        return $this->alertaInventarioRepository->getByProducto($idProducto);
-    }
-
-    public function getByEstadoLeido(bool $leido)
-    {
-        return $this->alertaInventarioRepository->getByEstadoLeido($leido);
-    }
-
-    public function getNoLeidas()
-    {
-        return $this->alertaInventarioRepository->getNoLeidas();
-    }
-
-    public function marcarComoLeida(int $idAlerta)
-    {
-        return $this->alertaInventarioRepository->marcarComoLeida($idAlerta);
     }
 }

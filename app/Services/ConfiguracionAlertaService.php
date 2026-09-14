@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-class EntradaService
+class ConfiguracionAlertaService
 {
     public function __construct(
         private ConfiguracionAlertaInterface $configuracionAlertaRepository
