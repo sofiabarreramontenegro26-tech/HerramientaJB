@@ -61,18 +61,4 @@ class ProductoFavoritoController extends Controller
             "data" => $productoFavorito
         ]);
     }
-
-    public function getByUsuarioId(string $idUsuario)
-    {
-        return response()->json([
-            "data" => $this->productoFavoritoServicio->findByUsuarioId((int) $idUsuario)
-        ]);
-    }
-
-    public function getByProductoId(string $idProducto)
-    {
-        return response()->json([
-            "data" => $this->productoFavoritoServicio->findByProductoId((int) $idProducto)
-        ]);
-    }
 }
