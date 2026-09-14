@@ -7,7 +7,7 @@ use App\Services\RolService;
 use App\Http\Requests\Rol\StoreRolRequest;
 use App\Http\Requests\Rol\UpdateRolRequest;
 
-abstract class Controller
+abstract class Controller extends BaseController
 {
 
 }
