@@ -2,57 +2,57 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\EntradaService;
-use App\Http\Requests\Entrada\StoreEntradaRequest;
-use App\Http\Requests\Entrada\UpdateEntradaRequest;
+use App\Services\MovimientoInventarioService;
+use App\Http\Requests\MovimientoInventario\StoreMovimientoInventarioRequest;
+use App\Http\Requests\MovimientoInventario\UpdateMovimientoInventarioRequest;
 
-class EntradaController extends Controller
+class MovimientoInventarioController extends Controller
 {
-    protected EntradaService $entradaService;
+    protected MovimientoInventarioService $movimientoInventarioService;
 
-    public function __construct(EntradaService $entradaService)
+    public function __construct(MovimientoInventarioService $movimientoInventarioService)
     {
-        $this->entradaService = $entradaService;
+        $this->movimientoInventarioService = $movimientoInventarioService;
     }
 
     public function index()
     {
-        return response()->json($this->entradaService->obtenerTodas(), 200);
+        return response()->json($this->movimientoInventarioService->list(), 200);
     }
 
-    public function store(StoreEntradaRequest $request)
+    public function store(StoreMovimientoInventarioRequest $request)
     {
-        $entrada = $this->entradaService->crear($request->validated());
+        $movimientoInventario = $this->movimientoInventarioService->store($request->validated());
 
         return response()->json([
-            'message' => 'Entrada registrada correctamente en el inventario',
-            'data' => $entrada
+            'message' => 'Movimiento de inventario registrado correctamente',
+            'data' => $movimientoInventario
         ], 201);
     }
 
     public function show(int $id)
     {
-        $entrada = $this->entradaService->obtenerPorId($id);
+        $movimientoInventario = $this->movimientoInventarioService->show($id);
 
-        return response()->json($entrada, 200);
+        return response()->json($movimientoInventario, 200);
     }
 
-    public function update(UpdateEntradaRequest $request, int $id)
+    public function update(UpdateMovimientoInventarioRequest $request, int $id)
     {
-        $entrada = $this->entradaService->actualizar($id, $request->validated());
+        $movimientoInventario = $this->movimientoInventarioService->update($id, $request->validated());
 
         return response()->json([
-            'message' => 'Entrada de inventario actualizada correctamente',
-            'data' => $entrada
+            'message' => 'Movimiento de inventario actualizado correctamente',
+            'data' => $movimientoInventario
         ], 200);
     }
 
     public function destroy(int $id)
     {
-        $this->entradaService->eliminar($id);
+        $this->movimientoInventarioService->destroy($id);
 
         return response()->json([
-            'message' => 'Entrada de inventario eliminada correctamente'
+            'message' => 'Movimiento de inventario eliminado correctamente'
         ], 200);
     }
 }
