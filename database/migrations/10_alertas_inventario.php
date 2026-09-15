@@ -15,10 +15,10 @@ return new class extends Migration
 
             // FK: id_producto foranea
             $table->foreignId('id_producto')
-                  ->constrained('productos')
+                  ->constrained('productos', 'id_producto')
                   ->onDelete('cascade');
 
-            // Mensaje de la alerta (RQF010, RQF015)
+            // Mensaje de la alerta 
             $table->string('mensaje');
 
   
