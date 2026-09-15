@@ -14,7 +14,7 @@ class StoreConfiguracionAlertaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'dias_anticipacion_entrega' => ['sometimes', 'required', 'integer', 'min:0'],
+            'dias_anticipacion_entrega' => ['required', 'integer', 'min:0'],
         ];
     }
 

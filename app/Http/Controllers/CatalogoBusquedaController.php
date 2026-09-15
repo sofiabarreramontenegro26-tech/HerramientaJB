@@ -17,12 +17,12 @@ class CatalogoBusquedaController extends Controller
 
     public function index()
     {
-        return response()->json($this->catalogoService->obtenerTodos(), 200);
+        return response()->json($this->catalogoService->list(), 200);
     }
 
     public function store(StoreCatalogoBusquedaRequest $request)
     {
-        $catalogo = $this->catalogoService->crear($request->validated());
+        $catalogo = $this->catalogoService->store($request->validated());
 
         return response()->json([
             'message' => 'Producto agregado al catálogo correctamente',
@@ -32,14 +32,14 @@ class CatalogoBusquedaController extends Controller
 
     public function show(int $id_catalogo)
     {
-        $catalogo = $this->catalogoService->obtenerPorId($id_catalogo);
+        $catalogo = $this->catalogoService->show($id_catalogo);
 
         return response()->json($catalogo, 200);
     }
 
     public function update(UpdateCatalogoBusquedaRequest $request, int $id_catalogo)
     {
-        $catalogo = $this->catalogoService->actualizar($id_catalogo, $request->validated());
+        $catalogo = $this->catalogoService->update($id_catalogo, $request->validated());
 
         return response()->json([
             'message' => 'Registro de catálogo actualizado correctamente',
@@ -49,7 +49,7 @@ class CatalogoBusquedaController extends Controller
 
     public function destroy(int $id_catalogo)
     {
-        $this->catalogoService->eliminar($id_catalogo);
+        $this->catalogoService->destroy($id_catalogo);
 
         return response()->json([
             'message' => 'Registro eliminado del catálogo correctamente'

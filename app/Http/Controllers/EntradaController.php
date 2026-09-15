@@ -17,12 +17,12 @@ class EntradaController extends Controller
 
     public function index()
     {
-        return response()->json($this->entradaService->obtenerTodas(), 200);
+        return response()->json($this->entradaService->list(), 200);
     }
 
     public function store(StoreEntradaRequest $request)
     {
-        $entrada = $this->entradaService->crear($request->validated());
+        $entrada = $this->entradaService->store($request->validated());
 
         return response()->json([
             'message' => 'Entrada creada correctamente',
@@ -32,14 +32,14 @@ class EntradaController extends Controller
 
     public function show($id_entrada)
     {
-        $entrada = $this->entradaService->obtenerPorId($id_entrada);
+        $entrada = $this->entradaService->show((int) $id_entrada);
 
         return response()->json($entrada, 200);
     }
 
     public function update(UpdateEntradaRequest $request, $id_entrada)
     {
-        $entrada = $this->entradaService->actualizar($id_entrada, $request->validated());
+        $entrada = $this->entradaService->update((int) $id_entrada, $request->validated());
 
         return response()->json([
             'message' => 'Entrada actualizada correctamente',
@@ -49,7 +49,7 @@ class EntradaController extends Controller
 
     public function destroy($id_entrada)
     {
-        $this->entradaService->eliminar($id_entrada);
+        $this->entradaService->destroy((int) $id_entrada);
 
         return response()->json([
             'message' => 'Entrada eliminada correctamente'
