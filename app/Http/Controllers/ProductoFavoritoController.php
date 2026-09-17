@@ -3,62 +3,55 @@
 namespace App\Http\Controllers;
 
 use App\Services\ProductoFavoritoService;
-use App\Http\Requests\StoreProductoFavoritoRequest;
-use App\Http\Requests\UpdateProductoFavoritoRequest;
+use App\Http\Requests\ProductoFavorito\StoreProductoFavoritoRequest;
+use App\Http\Requests\ProductoFavorito\UpdateProductoFavoritoRequest;
 
 class ProductoFavoritoController extends Controller
 {
-    public function __construct(private ProductoFavoritoService $productoFavoritoServicio)
+    protected ProductoFavoritoService $productoFavoritoService;
+
+    public function __construct(ProductoFavoritoService $productoFavoritoService)
     {
+        $this->productoFavoritoService = $productoFavoritoService;
     }
 
     public function index()
     {
-        return response()->json([
-            "success" => "Se listaron correctamente",
-            "data" => $this->productoFavoritoServicio->all()
-        ]);
+        return response()->json($this->productoFavoritoService->obtenerTodas(), 200);
     }
 
-    public function store(StoreProductoFavoritoRequest $datos)
+    public function store(StoreProductoFavoritoRequest $request)
     {
-        $registroInsertado = $this->productoFavoritoServicio->store(
-            $datos->validated()
-        );
+        $productoFavorito = $this->productoFavoritoService->crear($request->validated());
 
         return response()->json([
-            "success" => "El producto favorito se creó correctamente",
-            "datosInsertado" => $registroInsertado
-        ]);
-    }
-
-    public function show(string $id)
-    {
-        return response()->json([
-            "data" => $this->productoFavoritoServicio->show((int) $id)
-        ]);
-    }
-
-    public function update(UpdateProductoFavoritoRequest $datoActualizar, string $id)
-    {
-        $productoFavorito = $this->productoFavoritoServicio->update(
-            (int) $id,
-            $datoActualizar->validated()
-        );
-
-        return response()->json([
-            "success" => "El producto favorito se actualizó correctamente",
+            "message" => "El producto se agregó a favoritos correctamente",
             "data" => $productoFavorito
-        ]);
+        ], 201);
     }
 
-    public function destroy(string $id)
+    public function show(string $id_producto_favorito)
     {
-        $productoFavorito = $this->productoFavoritoServicio->destroy((int) $id);
+        $productoFavorito = $this->productoFavoritoService->obtenerPorId($id_producto_favorito);
+        return response()->json($productoFavorito, 200);
+    }
+
+    public function update(UpdateProductoFavoritoRequest $request, $id_producto_favorito)
+    {
+        $productoFavorito = $this->productoFavoritoService->actualizar($id_producto_favorito, $request->validated());
 
         return response()->json([
-            "success" => "El producto favorito se eliminó correctamente",
+            "message" => "El producto favorito se actualizó correctamente",
             "data" => $productoFavorito
-        ]);
+        ], 200);
+    }
+
+    public function destroy($id_producto_favorito)
+    {
+        $this->productoFavoritoService->eliminar($id_producto_favorito);
+
+        return response()->json([
+            "message" => "El producto se eliminó de favoritos correctamente"
+        ], 200);
     }
 }
