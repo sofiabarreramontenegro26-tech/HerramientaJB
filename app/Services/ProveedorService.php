@@ -25,13 +25,13 @@ class ProveedorService
         return $this->proveedorRepository->create($data);
     }
 
-    public function update(int $id, array $data)
+    public function update(array $data, int $id)
     {
-        return $this->proveedorRepository->update($id, $data);
+        return $this->proveedorRepository->update($data, $id);
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id_proveedor)
     {
-        return $this->proveedorRepository->delete($id);
+        return $this->proveedorRepository->delete($id_proveedor);
     }
 }

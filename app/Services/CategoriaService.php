@@ -25,13 +25,13 @@ class CategoriaService
         return $this->categoriaRepository->create($data);
     }
 
-    public function update(int $id, array $data)
+    public function update(array $data, int $id_categoria)
     {
-        return $this->categoriaRepository->update($id, $data);
+        return $this->categoriaRepository->update($data, $id_categoria);
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id_categoria)
     {
-        return $this->categoriaRepository->delete($id);
+        return $this->categoriaRepository->delete($id_categoria);
     }
 }

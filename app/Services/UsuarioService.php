@@ -25,13 +25,13 @@ class UsuarioService
         return $this->usuarioRepository->create($data);
     }
 
-    public function update(int $id, array $data)
+    public function update(array $data, int $id)
     {
-        return $this->usuarioRepository->update($id, $data);
+        return $this->usuarioRepository->update($data, $id);
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id_usuario)
     {
-        return $this->usuarioRepository->delete($id);
+        return $this->usuarioRepository->delete($id_usuario);
     }
 }

@@ -7,11 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class BaseRepository implements BaseInterface
 {
-    protected $model;
+    protected Model $model;
 
     public function __construct(Model $model)
     {
         $this->model = $model;
+    }
+
+    public function create(array $data)
+    {
+        return $this->model->create($data);
     }
 
     public function getAll()
@@ -24,27 +29,27 @@ class BaseRepository implements BaseInterface
         return $this->model->find($id);
     }
 
-    public function create(array $data)
+    public function update(array $data, int $id)
     {
-        return $this->model->create($data);
-    }
+        $registro = $this->model->find($id); 
 
-    public function update(int $id, array $data)
-    {
-        $record = $this->model->find($id);
-        if ($record) {
-            $record->update($data);
-            return $record;
+        if (! $registro) {
+            return null;
         }
-        return null;
+
+        $registro->update($data);
+
+        return $registro->fresh();
     }
 
     public function delete(int $id)
     {
-        $record = $this->model->find($id);
-        if ($record) {
-            return $record->delete();
+        $registro = $this->model->find($id); 
+
+        if (!$registro) {
+            return null;
         }
-        return false;
+
+        return $registro->delete($id); 
     }
 }

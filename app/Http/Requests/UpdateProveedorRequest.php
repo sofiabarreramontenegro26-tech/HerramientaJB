@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Proveedor;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -15,7 +15,7 @@ class UpdateProveedorRequest extends FormRequest
     {
         return [
             // 'sometimes' permite actualizar parcialmente solo los campos enviados
-            'nombre' => ['sometimes', 'required', 'string', 'max:100'],
+            'nombre' => ['sometimes', 'string', 'max:100'],
             'telefono' => ['nullable', 'string', 'max:20'],
             'empresa' => ['nullable', 'string', 'max:100'],
         ];
@@ -24,7 +24,6 @@ class UpdateProveedorRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'nombre.required' => 'El nombre del proveedor es obligatorio.',
             'nombre.string' => 'El nombre debe ser un texto válido.',
             'nombre.max' => 'El nombre no puede superar los 100 caracteres.',
 

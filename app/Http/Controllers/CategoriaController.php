@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Services\CategoriaService;
-use App\Http\Requests\Categoria\StoreCategoriaRequest;
-use App\Http\Requests\Categoria\UpdateCategoriaRequest;
+use App\Http\Requests\StoreCategoriaRequest;
+use App\Http\Requests\UpdateCategoriaRequest;
 
 class CategoriaController extends Controller
 {
@@ -17,12 +17,12 @@ class CategoriaController extends Controller
 
     public function index()
     {
-        return response()->json($this->categoriaService->obtenerTodas(), 200);
+        return response()->json($this->categoriaService->all(), 200);
     }
 
     public function store(StoreCategoriaRequest $request)
     {
-        $categoria = $this->categoriaService->crear($request->validated());
+        $categoria = $this->categoriaService->store($request->validated());
 
         return response()->json([
             'message' => 'Categoría creada correctamente',
@@ -32,14 +32,16 @@ class CategoriaController extends Controller
 
     public function show($id_categoria)
     {
-        $categoria = $this->categoriaService->obtenerPorId($id_categoria);
+        $categoria = $this->categoriaService->show($id_categoria);
 
         return response()->json($categoria, 200);
     }
 
     public function update(UpdateCategoriaRequest $request, $id_categoria)
     {
-        $categoria = $this->categoriaService->actualizar($id_categoria, $request->validated());
+        $categoria = $this->categoriaService->update(
+        $request->validated(),
+        (int) $id_categoria);
 
         return response()->json([
             'message' => 'Categoría actualizada correctamente',
@@ -49,7 +51,7 @@ class CategoriaController extends Controller
 
     public function destroy($id_categoria)
     {
-        $this->categoriaService->eliminar($id_categoria);
+        $this->categoriaService->destroy((int)$id_categoria);
 
         return response()->json([
             'message' => 'Categoría eliminada correctamente'

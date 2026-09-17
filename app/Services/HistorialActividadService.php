@@ -25,13 +25,13 @@ class HistorialActividadService
         return $this->historialActividadRepository->create($data);
     }
 
-    public function update(int $id, array $data)
+    public function update(array $data, int $id_historial)
     {
-        return $this->historialActividadRepository->update($id, $data);
+        return $this->historialActividadRepository->update($data, $id_historial);
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id_historial)
     {
-        return $this->historialActividadRepository->delete($id);
+        return $this->historialActividadRepository->delete($id_historial);
     }
 }

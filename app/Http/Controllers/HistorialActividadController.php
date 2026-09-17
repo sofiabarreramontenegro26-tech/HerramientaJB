@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Services\HistorialActividadService;
-use App\Http\Requests\HistorialActividad\StoreHistorialActividadRequest;
-use App\Http\Requests\HistorialActividad\UpdateHistorialActividadRequest;
+use App\Http\Requests\StoreHistorialActividadRequest;
+use App\Http\Requests\UpdateHistorialActividadRequest;
 
 class HistorialActividadController extends Controller
 {
@@ -17,12 +17,12 @@ class HistorialActividadController extends Controller
 
     public function index()
     {
-        return response()->json($this->historialActividadService->obtenerTodos(), 200);
+        return response()->json($this->historialActividadService->all(), 200);
     }
 
     public function store(StoreHistorialActividadRequest $request)
     {
-        $actividad = $this->historialActividadService->crear($request->validated());
+        $actividad = $this->historialActividadService->store($request->validated());
 
         return response()->json([
             'message' => 'Actividad registrada correctamente',
@@ -32,24 +32,25 @@ class HistorialActividadController extends Controller
 
     public function show($id_historial)
     {
-        $actividad = $this->historialActividadService->obtenerPorId($id_historial);
+        $actividad = $this->historialActividadService->show($id_historial);
 
         return response()->json($actividad, 200);
     }
 
     public function update(UpdateHistorialActividadRequest $request, $id_historial)
-    {
-        $actividad = $this->historialActividadService->actualizar($id_historial, $request->validated());
+{
+    $actividad = $this->historialActividadService->update
+    ($request->validated(), (int) $id_historial);
 
-        return response()->json([
-            'message' => 'Historial actualizado correctamente',
-            'data' => $actividad
-        ], 200);
-    }
+    return response()->json([
+        'message' => 'Historial actualizado correctamente',
+        'data' => $actividad
+    ], 200);
+}
 
     public function destroy($id_historial)
     {
-        $this->historialActividadService->eliminar($id_historial);
+        $this->historialActividadService->destroy((int)$id_historial);
 
         return response()->json([
             'message' => 'Registro de historial eliminado correctamente'
