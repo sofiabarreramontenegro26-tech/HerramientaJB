@@ -39,3 +39,22 @@ Route::apiResource('movimientos-inventario', MovimientoInventarioController::cla
 Route::apiResource('configuracion-alertas', ConfiguracionAlertaController::class);
 Route::apiResource('alertas-inventario', AlertaInventarioController::class);
 Route::apiResource('catalogo', CatalogoController::class);
+
+Route::put('/roles/{rol}', [RolController::class, 'update']);
+Route::patch('/roles/{rol}', [RolController::class, 'update']);
+
+Route::put('/usuarios/{usuario}', [UsuarioController::class, 'update']);
+Route::patch('/usuarios/{usuario}', [UsuarioController::class, 'update']);
+
+Route::put('/historial-actividades/{historial_actividad}', [HistorialActividadController::class, 'update']);
+Route::patch('/historial-actividades/{historial_actividad}', [HistorialActividadController::class, 'update']);
+
+Route::put('/categorias/{categoria}', [CategoriaController::class, 'update']);
+Route::patch('/categorias/{categoria}', [CategoriaController::class, 'update']);
+
+Route::put('/proveedores/{proveedor}', [ProveedorController::class, 'update']);
+Route::patch('/proveedores/{proveedor}', [ProveedorController::class, 'update']);
+
+Route::put('/productos/{producto}', [ProductoController::class, 'update']);
+Route::patch('/productos/{producto}', [ProductoController::class, 'update']);
+

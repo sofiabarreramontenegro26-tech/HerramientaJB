@@ -2,498 +2,317 @@
 
 namespace Database\Seeders;
 
+use App\Models\AlertaInventario;
+use App\Models\CatalogoBusqueda;
+use App\Models\Categoria;
+use App\Models\ConfiguracionAlerta;
+use App\Models\Cotizacion;
+use App\Models\Entrada;
+use App\Models\HistorialActividad;
+use App\Models\HojaVida;
+use App\Models\Mantenimiento;
+use App\Models\Maquina;
+use App\Models\MovimientoInventario;
+use App\Models\Producto;
+use App\Models\ProductoFavorito;
+use App\Models\Proveedor;
+use App\Models\RegistroConectividad;
+use App\Models\Rol;
+use App\Models\Usuario;
+use App\Models\Venta;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Entrada;
-use App\Models\MovimientoInventario;
-use App\Models\ConfiguracionAlerta;
-use App\Models\AlertaInventario;
-use App\Models\CatalogoBusqueda;
 
 class DatabaseSeeder extends Seeder
 {
+    /**
+     * Seed the application's database.
+     */
     public function run(): void
     {
-        DB::transaction(function () {
+        $this->roles();
+        $this->categorias();
+        $this->proveedores();
+        $this->usuarios();
+        $this->productos();
+        $this->configuracionAlertas();
+        $this->entradas();
+        $this->movimientoInventario();
+        $this->alertasInventario();
+        $this->catalogoBusquedas();
+        $this->productosFavoritos();
+        $this->cotizaciones();
+        $this->ventas();
+        $this->maquinas();
+        $this->hojasVida();
+        $this->mantenimientos();
+        $this->registrosConectividad();
+        $this->historialActividades();
+    }
 
-            $administradorId = DB::table('roles')->insertGetId([
-                'nombre' => 'Administrador',
+    protected function roles(): void
+    {
+        foreach (['Administrador', 'Almacén', 'Ventas'] as $nombre) {
+            Rol::firstOrCreate(['nombre' => $nombre]);
+        }
+    }
+
+    protected function categorias(): void
+    {
+        $categorias = [
+            ['nombre' => 'Herramientas manuales', 'descripcion' => 'Herramientas para trabajo general y mantenimiento.'],
+            ['nombre' => 'Electricidad', 'descripcion' => 'Materiales y accesorios eléctricos.'],
+            ['nombre' => 'Seguridad', 'descripcion' => 'Elementos de protección personal y seguridad industrial.'],
+            ['nombre' => 'Ferretería', 'descripcion' => 'Productos básicos de ferretería y construcción.'],
+        ];
+
+        foreach ($categorias as $categoria) {
+            Categoria::firstOrCreate(
+                ['nombre' => $categoria['nombre']],
+                ['descripcion' => $categoria['descripcion']]
+            );
+        }
+    }
+
+    protected function proveedores(): void
+    {
+        $proveedores = [
+            ['nombre' => 'Javier Torres', 'telefono' => '3001234567', 'empresa' => 'JTB Soluciones'],
+            ['nombre' => 'Mónica Ríos', 'telefono' => '3017654321', 'empresa' => 'FerreMax LTDA'],
+            ['nombre' => 'Andrés Díaz', 'telefono' => '3029876543', 'empresa' => 'Insumos Industriales'],
+            ['nombre' => 'Constructora Siglo XXI', 'telefono' => '3104567890', 'empresa' => 'Siglo XXI'],
+        ];
+
+        foreach ($proveedores as $proveedor) {
+            Proveedor::firstOrCreate(
+                ['nombre' => $proveedor['nombre']],
+                ['telefono' => $proveedor['telefono'], 'empresa' => $proveedor['empresa']]
+            );
+        }
+    }
+
+    protected function usuarios(): void
+    {
+        $adminRolId = Rol::where('nombre', 'Administrador')->value('id_rol');
+        $almacenRolId = Rol::where('nombre', 'Almacén')->value('id_rol');
+        $ventasRolId = Rol::where('nombre', 'Ventas')->value('id_rol');
+
+        $usuarios = [
+            ['nombre_completo' => 'Administrador Principal', 'correo' => 'admin@jtb.com', 'id_rol' => $adminRolId],
+            ['nombre_completo' => 'Ana García', 'correo' => 'almacen@jtb.com', 'id_rol' => $almacenRolId],
+            ['nombre_completo' => 'Carlos López', 'correo' => 'ventas@jtb.com', 'id_rol' => $ventasRolId],
+        ];
+
+        foreach ($usuarios as $usuario) {
+            Usuario::firstOrCreate(
+                ['correo' => $usuario['correo']],
+                [
+                    'nombre_completo' => $usuario['nombre_completo'],
+                    'contraseña' => Hash::make('password123'),
+                    'id_rol' => $usuario['id_rol'],
+                ]
+            );
+        }
+    }
+
+    protected function productos(): void
+    {
+        $categoriaHerramientas = Categoria::where('nombre', 'Herramientas manuales')->value('id_categoria');
+        $categoriaElectricidad = Categoria::where('nombre', 'Electricidad')->value('id_categoria');
+        $categoriaSeguridad = Categoria::where('nombre', 'Seguridad')->value('id_categoria');
+        $categoriaFerreteria = Categoria::where('nombre', 'Ferretería')->value('id_categoria');
+
+        $proveedor1 = Proveedor::where('nombre', 'Javier Torres')->value('id_proveedor');
+        $proveedor2 = Proveedor::where('nombre', 'Mónica Ríos')->value('id_proveedor');
+        $proveedor3 = Proveedor::where('nombre', 'Andrés Díaz')->value('id_proveedor');
+
+        $productos = [
+            ['nombre' => 'Taladro Inalámbrico 18V', 'descripcion' => 'Taladro con batería recargable y dos velocidades.', 'marca' => 'Makita', 'imagen' => 'productos/taladro.jpg', 'cantidad' => 15, 'stock_minimo' => 5, 'precio_compra' => 230000.00, 'precio_venta' => 320000.00, 'id_categoria' => $categoriaHerramientas, 'id_proveedor' => $proveedor1],
+            ['nombre' => 'Llave Inglesa 12 pulgadas', 'descripcion' => 'Llave ajustable de alta resistencia para mantenimiento.', 'marca' => 'Truper', 'imagen' => 'productos/llave.jpg', 'cantidad' => 30, 'stock_minimo' => 8, 'precio_compra' => 55000.00, 'precio_venta' => 85000.00, 'id_categoria' => $categoriaHerramientas, 'id_proveedor' => $proveedor2],
+            ['nombre' => 'Cable Eléctrico 2.5mm', 'descripcion' => 'Cable de cobre flexible para instalaciones internas.', 'marca' => 'Elektra', 'imagen' => 'productos/cable.jpg', 'cantidad' => 40, 'stock_minimo' => 10, 'precio_compra' => 18000.00, 'precio_venta' => 26000.00, 'id_categoria' => $categoriaElectricidad, 'id_proveedor' => $proveedor3],
+            ['nombre' => 'Guantes de Seguridad', 'descripcion' => 'Guantes resistentes para manipulación de materiales.', 'marca' => 'SafePro', 'imagen' => 'productos/guantes.jpg', 'cantidad' => 50, 'stock_minimo' => 12, 'precio_compra' => 14000.00, 'precio_venta' => 22000.00, 'id_categoria' => $categoriaSeguridad, 'id_proveedor' => $proveedor2],
+            ['nombre' => 'Tornillos Hexagonales', 'descripcion' => 'Paquete de tornillos para uso general y armado.', 'marca' => 'JTB', 'imagen' => 'productos/tornillos.jpg', 'cantidad' => 100, 'stock_minimo' => 25, 'precio_compra' => 12000.00, 'precio_venta' => 18000.00, 'id_categoria' => $categoriaFerreteria, 'id_proveedor' => $proveedor1],
+            ['nombre' => 'Cinta Aislante Premium', 'descripcion' => 'Cinta aislante para cableado y mantenimiento eléctrico.', 'marca' => 'IsolMax', 'imagen' => 'productos/cinta.jpg', 'cantidad' => 60, 'stock_minimo' => 15, 'precio_compra' => 9000.00, 'precio_venta' => 15000.00, 'id_categoria' => $categoriaElectricidad, 'id_proveedor' => $proveedor3],
+        ];
+
+        foreach ($productos as $producto) {
+            Producto::firstOrCreate(
+                ['nombre' => $producto['nombre']],
+                [
+                    'descripcion' => $producto['descripcion'],
+                    'marca' => $producto['marca'],
+                    'imagen' => $producto['imagen'],
+                    'cantidad' => $producto['cantidad'],
+                    'stock_minimo' => $producto['stock_minimo'],
+                    'precio_compra' => $producto['precio_compra'],
+                    'precio_venta' => $producto['precio_venta'],
+                    'id_categoria' => $producto['id_categoria'],
+                    'id_proveedor' => $producto['id_proveedor'],
+                ]
+            );
+        }
+    }
+
+    protected function configuracionAlertas(): void
+    {
+        ConfiguracionAlerta::firstOrCreate(
+            ['id_configuracion' => 1],
+            ['dias_anticipacion_entrega' => 2]
+        );
+    }
+
+    protected function entradas(): void
+    {
+        $producto1 = Producto::where('nombre', 'Taladro Inalámbrico 18V')->value('id_producto');
+        $producto2 = Producto::where('nombre', 'Cable Eléctrico 2.5mm')->value('id_producto');
+        $proveedor1 = Proveedor::where('nombre', 'Javier Torres')->value('id_proveedor');
+        $proveedor3 = Proveedor::where('nombre', 'Andrés Díaz')->value('id_proveedor');
+
+        $entradas = [
+            ['cantidad' => 10, 'fecha' => '2026-09-01', 'id_producto' => $producto1, 'id_proveedor' => $proveedor1],
+            ['cantidad' => 20, 'fecha' => '2026-09-06', 'id_producto' => $producto2, 'id_proveedor' => $proveedor3],
+        ];
+
+        foreach ($entradas as $entrada) {
+            Entrada::firstOrCreate(
+                ['cantidad' => $entrada['cantidad'], 'fecha' => $entrada['fecha'], 'id_producto' => $entrada['id_producto'], 'id_proveedor' => $entrada['id_proveedor']],
+                $entrada
+            );
+        }
+    }
+
+    protected function movimientoInventario(): void
+    {
+        if (!DB::table('movimiento_inventario')->exists()) {
+            DB::table('movimiento_inventario')->insert([
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
+        }
+    }
 
-            $vendedorId = DB::table('roles')->insertGetId([
-                'nombre' => 'Vendedor',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+    protected function alertasInventario(): void
+    {
+        $producto = Producto::where('nombre', 'Guantes de Seguridad')->value('id_producto');
 
-            $almacenistaId = DB::table('roles')->insertGetId([
-                'nombre' => 'Almacenista',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+        if ($producto) {
+            AlertaInventario::firstOrCreate(
+                ['id_producto' => $producto],
+                ['mensaje' => 'Stock bajo: guantes de seguridad cerca del mínimo.', 'leido' => false]
+            );
+        }
+    }
 
-            $computadoresId = DB::table('categorias')->insertGetId([
-                'nombre' => 'Computadores',
-                'descripcion' => 'Computadores de escritorio y portátiles.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+    protected function catalogoBusquedas(): void
+    {
+        $producto = Producto::where('nombre', 'Taladro Inalámbrico 18V')->value('id_producto');
 
-            $perifericosId = DB::table('categorias')->insertGetId([
-                'nombre' => 'Periféricos',
-                'descripcion' => 'Teclados, mouse, cámaras y otros periféricos.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+        if ($producto) {
+            CatalogoBusqueda::firstOrCreate(
+                ['id_producto' => $producto],
+                ['destacado' => true]
+            );
+        }
+    }
 
-            $monitoresId = DB::table('categorias')->insertGetId([
-                'nombre' => 'Monitores',
-                'descripcion' => 'Monitores para oficina, diseño y entretenimiento.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+    protected function productosFavoritos(): void
+    {
+        $usuario = Usuario::where('correo', 'ventas@jtb.com')->value('id_usuario');
+        $producto = Producto::where('nombre', 'Cable Eléctrico 2.5mm')->value('id_producto');
 
-            $almacenamientoId = DB::table('categorias')->insertGetId([
-                'nombre' => 'Almacenamiento',
-                'descripcion' => 'Discos SSD, discos duros y memorias USB.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+        if ($usuario && $producto) {
+            ProductoFavorito::firstOrCreate(
+                ['id_usuario' => $usuario, 'id_producto' => $producto],
+                ['id_usuario' => $usuario, 'id_producto' => $producto]
+            );
+        }
+    }
 
-            $accesoriosId = DB::table('categorias')->insertGetId([
-                'nombre' => 'Accesorios',
-                'descripcion' => 'Cables, adaptadores y otros accesorios tecnológicos.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-
-            $tecnologiaGlobalId = DB::table('proveedores')->insertGetId([
-                'nombre' => 'Tecnología Global',
-                'telefono' => '3001234567',
-                'empresa' => 'Tecnología Global S.A.S.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-
-            $compuDistribucionesId = DB::table('proveedores')->insertGetId([
-                'nombre' => 'CompuDistribuciones',
-                'telefono' => '3109876543',
-                'empresa' => 'CompuDistribuciones S.A.S.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-
-            $digitalSolutionsId = DB::table('proveedores')->insertGetId([
-                'nombre' => 'Digital Solutions',
-                'telefono' => '3154567890',
-                'empresa' => 'Digital Solutions Colombia S.A.S.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-
-            $importadoraTechId = DB::table('proveedores')->insertGetId([
-                'nombre' => 'Importadora Tech',
-                'telefono' => '3207654321',
-                'empresa' => 'Importadora Tech S.A.S.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-
-            $administradorUsuarioId = DB::table('usuarios')->insertGetId([
-                'nombre_completo' => 'Carlos Administrador',
-                'correo' => 'admin@inventario.com',
-                'contraseña' => Hash::make('Admin123*'),
-                'id_rol' => $administradorId,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-
-            $vendedorUsuarioId = DB::table('usuarios')->insertGetId([
-                'nombre_completo' => 'María Vendedora',
-                'correo' => 'maria@inventario.com',
-                'contraseña' => Hash::make('Vendedor123*'),
-                'id_rol' => $vendedorId,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-
-            $almacenistaUsuarioId = DB::table('usuarios')->insertGetId([
-                'nombre_completo' => 'Juan Almacenista',
-                'correo' => 'juan@inventario.com',
-                'contraseña' => Hash::make('Almacenista123*'),
-                'id_rol' => $almacenistaId,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-
-            $productos = [
-                [
-                    'nombre' => 'Portátil IdeaPad 3',
-                    'descripcion' => 'Computador portátil para trabajo y estudio.',
-                    'marca' => 'Lenovo',
-                    'imagen' => null,
-                    'cantidad' => 15,
-                    'stock_minimo' => 5,
-                    'precio_compra' => 1800000,
-                    'precio_venta' => 2250000,
-                    'id_categoria' => $computadoresId,
-                    'id_proveedor' => $tecnologiaGlobalId,
-                    'created_at' => now(),
-                    'updated_at' => now(),
+    protected function cotizaciones(): void
+    {
+        Cotizacion::firstOrCreate(
+            ['cliente_telefono' => '3005550123'],
+            [
+                'productos_seleccionados' => [
+                    ['id_producto' => 1, 'cantidad' => 2],
+                    ['id_producto' => 3, 'cantidad' => 1],
                 ],
-                [
-                    'nombre' => 'Mouse Inalámbrico M185',
-                    'descripcion' => 'Mouse inalámbrico compacto para oficina.',
-                    'marca' => 'Logitech',
-                    'imagen' => null,
-                    'cantidad' => 40,
-                    'stock_minimo' => 10,
-                    'precio_compra' => 45000,
-                    'precio_venta' => 65000,
-                    'id_categoria' => $perifericosId,
-                    'id_proveedor' => $compuDistribucionesId,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-                [
-                    'nombre' => 'Teclado Mecánico K552',
-                    'descripcion' => 'Teclado mecánico con iluminación RGB.',
-                    'marca' => 'Redragon',
-                    'imagen' => null,
-                    'cantidad' => 25,
-                    'stock_minimo' => 5,
-                    'precio_compra' => 140000,
-                    'precio_venta' => 195000,
-                    'id_categoria' => $perifericosId,
-                    'id_proveedor' => $digitalSolutionsId,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-                [
-                    'nombre' => 'Monitor 24 Pulgadas',
-                    'descripcion' => 'Monitor Full HD de 24 pulgadas.',
-                    'marca' => 'Samsung',
-                    'imagen' => null,
-                    'cantidad' => 12,
-                    'stock_minimo' => 4,
-                    'precio_compra' => 520000,
-                    'precio_venta' => 680000,
-                    'id_categoria' => $monitoresId,
-                    'id_proveedor' => $tecnologiaGlobalId,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-                [
-                    'nombre' => 'SSD 1TB NVMe',
-                    'descripcion' => 'Unidad de almacenamiento SSD NVMe de 1TB.',
-                    'marca' => 'Kingston',
-                    'imagen' => null,
-                    'cantidad' => 20,
-                    'stock_minimo' => 5,
-                    'precio_compra' => 280000,
-                    'precio_venta' => 360000,
-                    'id_categoria' => $almacenamientoId,
-                    'id_proveedor' => $importadoraTechId,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-                [
-                    'nombre' => 'Memoria USB 64GB',
-                    'descripcion' => 'Memoria USB de 64GB.',
-                    'marca' => 'SanDisk',
-                    'imagen' => null,
-                    'cantidad' => 50,
-                    'stock_minimo' => 10,
-                    'precio_compra' => 25000,
-                    'precio_venta' => 40000,
-                    'id_categoria' => $almacenamientoId,
-                    'id_proveedor' => $compuDistribucionesId,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-                [
-                    'nombre' => 'Cable HDMI 2 Metros',
-                    'descripcion' => 'Cable HDMI de alta velocidad de 2 metros.',
-                    'marca' => 'UGREEN',
-                    'imagen' => null,
-                    'cantidad' => 35,
-                    'stock_minimo' => 10,
-                    'precio_compra' => 30000,
-                    'precio_venta' => 45000,
-                    'id_categoria' => $accesoriosId,
-                    'id_proveedor' => $digitalSolutionsId,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-                [
-                    'nombre' => 'Base Refrigerante para Portátil',
-                    'descripcion' => 'Base con ventiladores para refrigeración de portátil.',
-                    'marca' => 'Cooler Master',
-                    'imagen' => null,
-                    'cantidad' => 18,
-                    'stock_minimo' => 5,
-                    'precio_compra' => 85000,
-                    'precio_venta' => 120000,
-                    'id_categoria' => $accesoriosId,
-                    'id_proveedor' => $importadoraTechId,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-            ];
+                'total' => 560000.00,
+            ]
+        );
+    }
 
-            $productoIds = [];
+    protected function ventas(): void
+    {
+        $usuario = Usuario::where('correo', 'ventas@jtb.com')->value('id_usuario');
 
-            foreach ($productos as $producto) {
-                $productoIds[] = DB::table('productos')->insertGetId($producto);
-            }
+        if ($usuario) {
+            Venta::firstOrCreate(
+                ['cliente' => 'Constructora Zeta', 'fecha' => '2026-09-10', 'id_usuario' => $usuario],
+                ['total_venta' => 320000.00, 'ganancia_total' => 90000.00]
+            );
+        }
+    }
 
-            DB::table('historial_actividades')->insert([
-                [
-                    'accion' => 'Inicio de sesión en el sistema.',
-                    'id_usuario' => $administradorUsuarioId,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-                [
-                    'accion' => 'Registro de nuevos productos.',
-                    'id_usuario' => $administradorUsuarioId,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-                [
-                    'accion' => 'Consulta del inventario.',
-                    'id_usuario' => $vendedorUsuarioId,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-                [
-                    'accion' => 'Consulta de productos disponibles.',
-                    'id_usuario' => $vendedorUsuarioId,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-                [
-                    'accion' => 'Actualización de cantidades del inventario.',
-                    'id_usuario' => $almacenistaUsuarioId,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-                [
-                    'accion' => 'Consulta de productos con stock bajo.',
-                    'id_usuario' => $almacenistaUsuarioId,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-            ]);
+    protected function maquinas(): void
+    {
+        $proveedor = Proveedor::where('nombre', 'Constructora Siglo XXI')->value('id_proveedor');
 
-            DB::table('productos_favoritos')->insert([
-                [
-                    'id_usuario' => $administradorUsuarioId,
-                    'id_producto' => $productoIds[0],
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-                [
-                    'id_usuario' => $administradorUsuarioId,
-                    'id_producto' => $productoIds[3],
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-                [
-                    'id_usuario' => $vendedorUsuarioId,
-                    'id_producto' => $productoIds[4],
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-            ]);
+        if ($proveedor) {
+            Maquina::firstOrCreate(
+                ['referencia' => 'MAQ-1001'],
+                ['nombre' => 'Compresora industrial', 'fecha_compra' => '2024-05-12', 'id_proveedor' => $proveedor]
+            );
 
-            $clienteUnoId = DB::table('clientes')->insertGetId([
-                'nombre' => 'Andrea Gómez',
-                'telefono' => '3001112233',
-                'correo' => 'andrea@cliente.com',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+            Maquina::firstOrCreate(
+                ['referencia' => 'MAQ-1002'],
+                ['nombre' => 'Sierra circular', 'fecha_compra' => '2025-02-20', 'id_proveedor' => $proveedor]
+            );
+        }
+    }
 
-            $clienteDosId = DB::table('clientes')->insertGetId([
-                'nombre' => 'Felipe Ramírez',
-                'telefono' => '3114445566',
-                'correo' => 'felipe@cliente.com',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+    protected function hojasVida(): void
+    {
+        $maquina = Maquina::where('referencia', 'MAQ-1001')->value('id_maquina');
 
-            DB::table('cotizaciones')->insert([
-                [
-                    'id_cliente' => $clienteUnoId,
-                    'monto_total' => 150000.00,
-                    'estado' => 'Pendiente',
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-                [
-                    'id_cliente' => $clienteDosId,
-                    'monto_total' => 320000.50,
-                    'estado' => 'Aprobada',
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-            ]);
+        if ($maquina) {
+            HojaVida::firstOrCreate(
+                ['id_maquina' => $maquina],
+                ['fecha_ingreso' => '2024-05-15', 'especificaciones_tecnicas' => 'Motor 5 HP, 220V, mantenimiento trimestral.']
+            );
+        }
+    }
 
-            DB::table('ventas')->insert([
-                [
-                    'id_cliente' => $clienteUnoId,
-                    'total' => 150000.00,
-                    'metodo_pago' => 'Efectivo',
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-                [
-                    'id_cliente' => $clienteDosId,
-                    'total' => 320000.50,
-                    'metodo_pago' => 'Transferencia',
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-            ]);
+    protected function mantenimientos(): void
+    {
+        $maquina = Maquina::where('referencia', 'MAQ-1001')->value('id_maquina');
 
-            $tornoId = DB::table('maquinas')->insertGetId([
-                'nombre' => 'Torno Electromecánico CNC',
-                'modelo' => 'X200',
-                'estado' => 'Operativa',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+        if ($maquina) {
+            Mantenimiento::firstOrCreate(
+                ['tipo_mantenimiento' => 'preventivo', 'fecha' => '2026-08-15', 'id_maquina' => $maquina],
+                ['descripcion' => 'Cambio de filtros, revisión de correas y ajuste de presión.', 'tecnico_responsable' => 'Luis Moreno']
+            );
+        }
+    }
 
-            $prensaId = DB::table('maquinas')->insertGetId([
-                'nombre' => 'Prensa Hidráulica 20T',
-                'modelo' => 'PH-20',
-                'estado' => 'En Mantenimiento',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+    protected function registrosConectividad(): void
+    {
+        RegistroConectividad::firstOrCreate(
+            ['fecha_registro' => '2026-09-15 08:00:00'],
+            ['estado_conexion' => true]
+        );
+    }
 
-            DB::table('hojas_vida')->insert([
-                [
-                    'id_maquina' => $tornoId,
-                    'descripcion' => 'Hoja de vida para seguimiento de motor principal y rodamientos.',
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-                [
-                    'id_maquina' => $prensaId,
-                    'descripcion' => 'Hoja de vida para revisión del sistema hidráulico y pistones.',
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-            ]);
+    protected function historialActividades(): void
+    {
+        $usuario = Usuario::where('correo', 'admin@jtb.com')->value('id_usuario');
 
-            DB::table('mantenimientos')->insert([
-                [
-                    'id_maquina' => $tornoId,
-                    'tipo_mantenimiento' => 'Preventivo',
-                    'observaciones' => 'Cambio de aceite y calibración de motor.',
-                    'fecha_mantenimiento' => now(),
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-                [
-                    'id_maquina' => $prensaId,
-                    'tipo_mantenimiento' => 'Correctivo',
-                    'observaciones' => 'Reparación de fuga en manguera de presión.',
-                    'fecha_mantenimiento' => now(),
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-            ]);
-
-            DB::table('registros_conectividad')->insert([
-                [
-                    'estado_conexion' => true,
-                    'fecha_registro' => now(),
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-                [
-                    'estado_conexion' => false,
-                    'fecha_registro' => now()->subMinutes(15),
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-            ]);
-
-            Entrada::create([
-                'cantidad' => 10,
-                'fecha' => '2026-09-01',
-                'id_producto' => $productoIds[0],
-                'id_proveedor' => $tecnologiaGlobalId,
-            ]);
-
-            Entrada::create([
-                'cantidad' => 20,
-                'fecha' => '2026-09-05',
-                'id_producto' => $productoIds[1],
-                'id_proveedor' => $compuDistribucionesId,
-            ]);
-
-            Entrada::create([
-                'cantidad' => 15,
-                'fecha' => '2026-09-10',
-                'id_producto' => $productoIds[2],
-                'id_proveedor' => $digitalSolutionsId,
-            ]);
-
-            MovimientoInventario::create([]);
-            MovimientoInventario::create([]);
-            MovimientoInventario::create([]);
-
-            ConfiguracionAlerta::create([
-                'dias_anticipacion_entrega' => 2,
-            ]);
-
-            ConfiguracionAlerta::create([
-                'dias_anticipacion_entrega' => 5,
-            ]);
-
-            ConfiguracionAlerta::create([
-                'dias_anticipacion_entrega' => 7,
-            ]);
-
-            AlertaInventario::create([
-                'id_producto' => $productoIds[0],
-                'mensaje' => 'El producto está próximo a agotarse.',
-                'leido' => false,
-            ]);
-
-            AlertaInventario::create([
-                'id_producto' => $productoIds[1],
-                'mensaje' => 'El nivel de inventario es bajo.',
-                'leido' => false,
-            ]);
-
-            AlertaInventario::create([
-                'id_producto' => $productoIds[2],
-                'mensaje' => 'Se recomienda realizar una nueva entrada de producto.',
-                'leido' => true,
-            ]);
-
-            CatalogoBusqueda::create([
-                'id_producto' => $productoIds[0],
-                'destacado' => true,
-            ]);
-
-            CatalogoBusqueda::create([
-                'id_producto' => $productoIds[1],
-                'destacado' => false,
-            ]);
-
-            CatalogoBusqueda::create([
-                'id_producto' => $productoIds[2],
-                'destacado' => true,
-            ]);
-        });
+        if ($usuario) {
+            HistorialActividad::firstOrCreate(
+                ['accion' => 'Se inicializó el sistema con datos base', 'id_usuario' => $usuario],
+                ['accion' => 'Se inicializó el sistema con datos base', 'id_usuario' => $usuario]
+            );
+        }
     }
 }

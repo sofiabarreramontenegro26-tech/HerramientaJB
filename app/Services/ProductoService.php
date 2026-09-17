@@ -25,13 +25,13 @@ class ProductoService
         return $this->productoRepository->create($data);
     }
 
-    public function update(int $id, array $data)
+    public function update(array $data, int $id)
     {
-        return $this->productoRepository->update($id, $data);
+        return $this->productoRepository->update($data, $id);
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id_producto)
     {
-        return $this->productoRepository->delete($id);
+        return $this->productoRepository->delete($id_producto);
     }
 }

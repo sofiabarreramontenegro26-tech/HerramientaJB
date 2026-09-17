@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Categoria;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -20,7 +20,6 @@ class UpdateCategoriaRequest extends FormRequest
         return [
             'nombre' => [
                 'sometimes',
-                'required',
                 'string',
                 'max:100',
                 // Ignora el registro actual evaluando sobre la llave primaria 'id_categoria'
@@ -33,7 +32,6 @@ class UpdateCategoriaRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'nombre.required' => 'El nombre de la categoría es obligatorio.',
             'nombre.string' => 'El nombre debe ser un texto válido.',
             'nombre.max' => 'El nombre no puede superar los 100 caracteres.',
             'nombre.unique' => 'Ya existe otra categoría con este nombre.',

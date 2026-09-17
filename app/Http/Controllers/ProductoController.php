@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Services\ProductoService;
-use App\Http\Requests\Producto\StoreProductoRequest;
-use App\Http\Requests\Producto\UpdateProductoRequest;
+use App\Http\Requests\StoreProductoRequest;
+use App\Http\Requests\UpdateProductoRequest;
 
 class ProductoController extends Controller
 {
@@ -17,12 +17,12 @@ class ProductoController extends Controller
 
     public function index()
     {
-        return response()->json($this->productoService->obtenerTodos(), 200);
+        return response()->json($this->productoService->all(), 200);
     }
 
     public function store(StoreProductoRequest $request)
     {
-        $producto = $this->productoService->crear($request->validated());
+        $producto = $this->productoService->store($request->validated());
 
         return response()->json([
             'message' => 'Producto creado correctamente',
@@ -32,14 +32,14 @@ class ProductoController extends Controller
 
     public function show($id_producto)
     {
-        $producto = $this->productoService->obtenerPorId($id_producto);
+        $producto = $this->productoService->show($id_producto);
 
         return response()->json($producto, 200);
     }
 
     public function update(UpdateProductoRequest $request, $id_producto)
     {
-        $producto = $this->productoService->actualizar($id_producto, $request->validated());
+        $producto = $this->productoService->update($request->validated(),(int) $id_producto);
 
         return response()->json([
             'message' => 'Producto actualizado correctamente',
@@ -49,7 +49,7 @@ class ProductoController extends Controller
 
     public function destroy($id_producto)
     {
-        $this->productoService->eliminar($id_producto);
+        $this->productoService->destroy((int)$id_producto);
 
         return response()->json([
             'message' => 'Producto eliminado correctamente'

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Services\ProveedorService;
-use App\Http\Requests\Proveedor\StoreProveedorRequest;
-use App\Http\Requests\Proveedor\UpdateProveedorRequest;
+use App\Http\Requests\StoreProveedorRequest;
+use App\Http\Requests\UpdateProveedorRequest;
 
 class ProveedorController extends Controller
 {
@@ -17,12 +17,12 @@ class ProveedorController extends Controller
 
     public function index()
     {
-        return response()->json($this->proveedorService->obtenerTodos(), 200);
+        return response()->json($this->proveedorService->all(), 200);
     }
 
     public function store(StoreProveedorRequest $request)
     {
-        $proveedor = $this->proveedorService->crear($request->validated());
+        $proveedor = $this->proveedorService->store($request->validated());
 
         return response()->json([
             'message' => 'Proveedor creado correctamente',
@@ -32,14 +32,14 @@ class ProveedorController extends Controller
 
     public function show($id_proveedor)
     {
-        $proveedor = $this->proveedorService->obtenerPorId($id_proveedor);
+        $proveedor = $this->proveedorService->show($id_proveedor);
 
         return response()->json($proveedor, 200);
     }
 
     public function update(UpdateProveedorRequest $request, $id_proveedor)
     {
-        $proveedor = $this->proveedorService->actualizar($id_proveedor, $request->validated());
+        $proveedor = $this->proveedorService->update($request->validated(),(int) $id_proveedor);
 
         return response()->json([
             'message' => 'Proveedor actualizado correctamente',
@@ -49,7 +49,7 @@ class ProveedorController extends Controller
 
     public function destroy($id_proveedor)
     {
-        $this->proveedorService->eliminar($id_proveedor);
+        $this->proveedorService->destroy((int)$id_proveedor);
 
         return response()->json([
             'message' => 'Proveedor eliminado correctamente'
