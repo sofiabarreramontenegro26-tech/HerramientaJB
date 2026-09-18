@@ -2,20 +2,22 @@
 
 namespace App\Services;
 
+use App\Interfaces\ConfiguracionAlertaInterface;
+
 class ConfiguracionAlertaService
 {
     public function __construct(
         private ConfiguracionAlertaInterface $configuracionAlertaRepository
-    ) {}
+    ){}
 
-    public function all()
+    public function list()
     {
-        return $this->configuracionAlertaRepository->getAll();
+        return $this->configuracionAlertaRepository->all();
     }
 
     public function show(int $id)
     {
-        return $this->configuracionAlertaRepository->getById($id);
+        return $this->configuracionAlertaRepository->find($id);
     }
 
     public function store(array $data)
@@ -31,5 +33,11 @@ class ConfiguracionAlertaService
     public function destroy(int $id)
     {
         return $this->configuracionAlertaRepository->delete($id);
+    }
+
+    public function consultarAlertas()
+    {
+        // Lógica de negocio para calcular u obtener alertas configuradas
+        return $this->configuracionAlertaRepository->all();
     }
 }

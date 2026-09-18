@@ -2,65 +2,63 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\EntradaService;
-use App\Http\Requests\Entrada\StoreEntradaRequest;
-use App\Http\Requests\Entrada\UpdateEntradaRequest;
+use App\Services\ConfiguracionAlertaService;
+use App\Http\Requests\ConfiguracionAlerta\StoreConfiguracionAlertaRequest;
+use App\Http\Requests\ConfiguracionAlerta\UpdateConfiguracionAlertaRequest;
 
-class EntradaController extends Controller
+class ConfiguracionAlertaController extends Controller
 {
-    protected EntradaService $entradaService;
+    protected ConfiguracionAlertaService $configuracionAlertaService;
 
-    public function __construct(EntradaService $entradaService)
+    public function __construct(ConfiguracionAlertaService $configuracionAlertaService)
     {
-        $this->entradaService = $entradaService;
+        $this->configuracionAlertaService = $configuracionAlertaService;
     }
 
     public function index()
     {
-        return response()->json($this->entradaService->obtenerTodas(), 200);
+        return response()->json($this->configuracionAlertaService->list(), 200);
     }
 
-    public function store(StoreEntradaRequest $request)
+    public function store(StoreConfiguracionAlertaRequest $request)
     {
-        $resultado = $this->entradaService->crear($request->validated());
+        $configuracion = $this->configuracionAlertaService->store($request->validated());
 
         return response()->json([
-            'message' => 'Entrada registrada correctamente en el inventario',
-            'data' => $resultado['entrada'],
-            'alertas' => $resultado['alertas'] ?? null
+            'message' => 'Configuración de alerta registrada correctamente',
+            'data' => $configuracion
         ], 201);
     }
 
     public function show(int $id)
     {
-        $entrada = $this->entradaService->obtenerPorId($id);
+        $configuracionAlerta = $this->configuracionAlertaService->show($id);
 
-        return response()->json($entrada, 200);
+        return response()->json($configuracionAlerta, 200);
     }
 
-    public function update(UpdateEntradaRequest $request, int $id)
+    public function update(UpdateConfiguracionAlertaRequest $request, int $id)
     {
-        $resultado = $this->entradaService->actualizar($id, $request->validated());
+        $configuracion = $this->configuracionAlertaService->update($id, $request->validated());
 
         return response()->json([
-            'message' => 'Entrada de inventario actualizada correctamente',
-            'data' => $resultado['entrada'],
-            'alertas' => $resultado['alertas'] ?? null
+            'message' => 'Configuración de alerta actualizada correctamente',
+            'data' => $configuracion
         ], 200);
     }
 
     public function destroy(int $id)
     {
-        $this->entradaService->eliminar($id);
+        $this->configuracionAlertaService->destroy($id);
 
         return response()->json([
-            'message' => 'Entrada de inventario eliminada correctamente'
+            'message' => 'Configuración de alerta eliminada correctamente'
         ], 200);
     }
 
     public function consultarAlertas()
     {
-        $alertas = $this->entradaService->obtenerAlertasConfiguradas();
+        $alertas = $this->configuracionAlertaService->consultarAlertas();
 
         return response()->json([
             'data' => $alertas

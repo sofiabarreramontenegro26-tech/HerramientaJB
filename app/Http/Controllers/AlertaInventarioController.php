@@ -17,12 +17,12 @@ class AlertaInventarioController extends Controller
 
     public function index()
     {
-        return response()->json($this->alertaService->obtenerTodas(), 200);
+        return response()->json($this->alertaService->list(), 200);
     }
 
     public function store(StoreAlertaInventarioRequest $request)
     {
-        $alerta = $this->alertaService->crear($request->validated());
+        $alerta = $this->alertaService->store($request->validated());
 
         return response()->json([
             'message' => 'Alerta de inventario creada correctamente',
@@ -32,14 +32,14 @@ class AlertaInventarioController extends Controller
 
     public function show(int $id_alerta)
     {
-        $alerta = $this->alertaService->obtenerPorId($id_alerta);
+        $alerta = $this->alertaService->show($id_alerta);
 
         return response()->json($alerta, 200);
     }
 
     public function update(UpdateAlertaInventarioRequest $request, int $id_alerta)
     {
-        $alerta = $this->alertaService->actualizar($id_alerta, $request->validated());
+        $alerta = $this->alertaService->update($id_alerta, $request->validated());
 
         return response()->json([
             'message' => 'Alerta de inventario actualizada correctamente',
@@ -49,7 +49,7 @@ class AlertaInventarioController extends Controller
 
     public function destroy(int $id_alerta)
     {
-        $this->alertaService->eliminar($id_alerta);
+        $this->alertaService->destroy($id_alerta);
 
         return response()->json([
             'message' => 'Alerta de inventario eliminada correctamente'
