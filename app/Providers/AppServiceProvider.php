@@ -56,7 +56,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ProveedorInterface::class, ProveedorRepository::class);
         $this->app->bind(ProductoInterface::class, ProductoRepository::class);
         $this->app->bind(EntradaInterface::class, EntradaRepository::class);
-    }
+        $this->app->bind(ConfiguracionAlertaInterface::class, ConfiguracionAlertaRepository::class);
+        $this->app->bind(AlertaInventarioInterface::class, AlertaInventarioRepository::class);
+        $this->app->bind(CatalogoBusquedaInterface::class, CatalogoBusquedaRepository::class);
+    }   
 
     public function boot(): void
     {

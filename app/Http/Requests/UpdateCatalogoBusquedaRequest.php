@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Requests\CatalogoBusqueda;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateCatalogoBusquedaRequest extends FormRequest
 {
@@ -14,7 +15,7 @@ class UpdateCatalogoBusquedaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id_producto' => ['sometimes', 'required', 'integer', 'exists:productos,id_producto'],
+            'id_producto' => ['sometimes', 'integer', 'exists:productos,id_producto'],
             'destacado'   => ['sometimes', 'boolean'],
         ];
     }
@@ -22,7 +23,6 @@ class UpdateCatalogoBusquedaRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'id_producto.required' => 'El producto es obligatorio si decide actualizarse.',
             'id_producto.integer'  => 'El identificador del producto debe ser un número entero.',
             'id_producto.exists'   => 'El producto seleccionado no existe en la base de datos.',
 
