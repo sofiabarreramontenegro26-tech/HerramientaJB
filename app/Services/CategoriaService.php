@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Services;
+
+use App\Interfaces\CategoriaInterface;
+
+class CategoriaService
+{
+    public function __construct(
+        private CategoriaInterface $categoriaRepository
+    ) {}
+
+    public function all()
+    {
+        return $this->categoriaRepository->getAll();
+    }
+
+    public function show(int $id)
+    {
+        return $this->categoriaRepository->getById($id);
+    }
+
+    public function store(array $data)
+    {
+        return $this->categoriaRepository->create($data);
+    }
+
+    public function update(array $data, int $id_categoria)
+    {
+        return $this->categoriaRepository->update($data, $id_categoria);
+    }
+
+    public function destroy(int $id_categoria)
+    {
+        return $this->categoriaRepository->delete($id_categoria);
+    }
+}
