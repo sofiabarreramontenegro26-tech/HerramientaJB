@@ -106,11 +106,12 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(RegistroConectividadInterface::class, RegistroConectividadRepository::class);
     }
 
+    
     /**
      * Bootstrap services.
      */
     public function boot(): void
     {
-        //
+        
     }
 }
