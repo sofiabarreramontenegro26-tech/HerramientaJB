@@ -19,7 +19,7 @@ use App\Http\Controllers\EntradaController;
 use App\Http\Controllers\MovimientoInventarioController;
 use App\Http\Controllers\ConfiguracionAlertaController;
 use App\Http\Controllers\AlertaInventarioController;
-use App\Http\Controllers\CatalogoController;
+use App\Http\Controllers\CatalogoBusquedaController;
 
 Route::apiResource('usuarios', UsuarioController::class);
 Route::apiResource('roles', RolController::class);
@@ -38,7 +38,7 @@ Route::apiResource('entradas', EntradaController::class);
 Route::apiResource('movimientos-inventario', MovimientoInventarioController::class);
 Route::apiResource('configuracion-alertas', ConfiguracionAlertaController::class);
 Route::apiResource('alertas-inventario', AlertaInventarioController::class);
-Route::apiResource('catalogo', CatalogoController::class);
+Route::apiResource('catalogo-busquedas', CatalogoBusquedaController::class);
 
 Route::put('/roles/{rol}', [RolController::class, 'update']);
 Route::patch('/roles/{rol}', [RolController::class, 'update']);
@@ -63,6 +63,16 @@ Route::patch('/entradas/{entrada}', [EntradaController::class, 'update']);
 
 Route::put('/movimientos-inventario/{movimiento-inventario}', [MovimientoInventarioController::class, 'update']);
 Route::patch('/movimientos-inventario/{movimiento-inventario}', [MovimientoInventarioController::class, 'update']);
+
+Route::put('/configuracion-alertas/{configuracion-alerta}', [ConfiguracionAlertaController::class, 'update']);
+Route::patch('/configuracion-alertas/{configuracion-alerta}', [ConfiguracionAlertaController::class, 'update']);
+
+Route::put('/alertas-inventario/{alerta-inventario}', [AlertaInventarioController::class, 'update']);
+Route::patch('/alertas-inventario/{alerta-inventario}', [AlertaInventarioController::class, 'update']);
+
+Route::put('/catalogo-busquedas/{catalogo-busqueda}', [CatalogoBusquedaController::class, 'update']);
+Route::patch('/catalogo-busquedas/{catalogo-busqueda}', [CatalogoBusquedaController::class, 'update']);
+
 
 
 

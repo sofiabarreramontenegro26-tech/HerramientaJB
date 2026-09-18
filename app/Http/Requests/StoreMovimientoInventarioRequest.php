@@ -14,7 +14,7 @@ class StoreMovimientoInventarioRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tipo' => ['required', 'string', Rule::in(['ENTRADA', 'SALIDA'])],
+            'tipo' => ['required', 'string', 'in:ENTRADA,SALIDA'],
             'cantidad' => ['required', 'integer', 'min:1'],
             'motivo' => ['nullable', 'string', 'max:255'],
             'fecha' => ['required', 'date'],
