@@ -3,62 +3,55 @@
 namespace App\Http\Controllers;
 
 use App\Services\MaquinaService;
-use App\Http\Requests\StoreMaquinaRequest;
-use App\Http\Requests\UpdateMaquinaRequest;
+use App\Http\Requests\Maquina\StoreMaquinaRequest;
+use App\Http\Requests\Maquina\UpdateMaquinaRequest;
 
 class MaquinaController extends Controller
 {
-    public function __construct(private MaquinaService $maquinaServicio)
+    protected MaquinaService $maquinaService;
+
+    public function __construct(MaquinaService $maquinaService)
     {
+        $this->maquinaService = $maquinaService;
     }
 
     public function index()
     {
-        return response()->json([
-            "success" => "Se listaron correctamente",
-            "data" => $this->maquinaServicio->all()
-        ]);
+        return response()->json($this->maquinaService->obtenerTodas(), 200);
     }
 
-    public function store(StoreMaquinaRequest $datos)
+    public function store(StoreMaquinaRequest $request)
     {
-        $registroInsertado = $this->maquinaServicio->store(
-            $datos->validated()
-        );
+        $maquina = $this->maquinaService->crear($request->validated());
 
         return response()->json([
-            "success" => "La máquina se creó correctamente",
-            "datosInsertado" => $registroInsertado
-        ]);
-    }
-
-    public function show(string $id)
-    {
-        return response()->json([
-            "data" => $this->maquinaServicio->show((int) $id)
-        ]);
-    }
-
-    public function update(UpdateMaquinaRequest $datoActualizar, string $id)
-    {
-        $maquina = $this->maquinaServicio->update(
-            (int) $id,
-            $datoActualizar->validated()
-        );
-
-        return response()->json([
-            "success" => "La máquina se actualizó correctamente",
+            "message" => "La máquina se creó correctamente",
             "data" => $maquina
-        ]);
+        ], 201);
     }
 
-    public function destroy(string $id)
+    public function show(string $id_maquina)
     {
-        $maquina = $this->maquinaServicio->destroy((int) $id);
+        $maquina = $this->maquinaService->obtenerPorId($id_maquina);
+        return response()->json($maquina, 200);
+    }
+
+    public function update(UpdateMaquinaRequest $request, $id_maquina)
+    {
+        $maquina = $this->maquinaService->actualizar($id_maquina, $request->validated());
 
         return response()->json([
-            "success" => "La máquina se eliminó correctamente",
+            "message" => "La máquina se actualizó correctamente",
             "data" => $maquina
-        ]);
+        ], 200);
+    }
+
+    public function destroy($id_maquina)
+    {
+        $this->maquinaService->eliminar($id_maquina);
+
+        return response()->json([
+            "message" => "La máquina se eliminó correctamente"
+        ], 200);
     }
 }

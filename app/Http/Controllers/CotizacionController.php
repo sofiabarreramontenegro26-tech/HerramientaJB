@@ -3,62 +3,55 @@
 namespace App\Http\Controllers;
 
 use App\Services\CotizacionService;
-use App\Http\Requests\StoreCotizacionRequest;
-use App\Http\Requests\UpdateCotizacionRequest;
+use App\Http\Requests\Cotizacion\StoreCotizacionRequest;
+use App\Http\Requests\Cotizacion\UpdateCotizacionRequest;
 
 class CotizacionController extends Controller
 {
-    public function __construct(private CotizacionService $cotizacionServicio)
+    protected CotizacionService $cotizacionService;
+
+    public function __construct(CotizacionService $cotizacionService)
     {
+        $this->cotizacionService = $cotizacionService;
     }
 
     public function index()
     {
-        return response()->json([
-            "success" => "Se listaron correctamente",
-            "data" => $this->cotizacionServicio->all()
-        ]);
+        return response()->json($this->cotizacionService->obtenerTodas(), 200);
     }
 
-    public function store(StoreCotizacionRequest $datos)
+    public function store(StoreCotizacionRequest $request)
     {
-        $registroInsertado = $this->cotizacionServicio->store(
-            $datos->validated()
-        );
+        $cotizacion = $this->cotizacionService->crear($request->validated());
 
         return response()->json([
-            "success" => "La cotización se creó correctamente",
-            "datosInsertado" => $registroInsertado
-        ]);
-    }
-
-    public function show(string $id)
-    {
-        return response()->json([
-            "data" => $this->cotizacionServicio->show((int) $id)
-        ]);
-    }
-
-    public function update(UpdateCotizacionRequest $datoActualizar, string $id)
-    {
-        $cotizacion = $this->cotizacionServicio->update(
-            (int) $id,
-            $datoActualizar->validated()
-        );
-
-        return response()->json([
-            "success" => "La cotización se actualizó correctamente",
+            "message" => "La cotización se creó correctamente",
             "data" => $cotizacion
-        ]);
+        ], 201);
     }
 
-    public function destroy(string $id)
+    public function show(string $id_cotizacion)
     {
-        $cotizacion = $this->cotizacionServicio->destroy((int) $id);
+        $cotizacion = $this->cotizacionService->obtenerPorId($id_cotizacion);
+        return response()->json($cotizacion, 200);
+    }
+
+    public function update(UpdateCotizacionRequest $request, $id_cotizacion)
+    {
+        $cotizacion = $this->cotizacionService->actualizar($id_cotizacion, $request->validated());
 
         return response()->json([
-            "success" => "La cotización se eliminó correctamente",
+            "message" => "La cotización se actualizó correctamente",
             "data" => $cotizacion
-        ]);
+        ], 200);
+    }
+
+    public function destroy($id_cotizacion)
+    {
+        $this->cotizacionService->eliminar($id_cotizacion);
+
+        return response()->json([
+            "message" => "La cotización se eliminó correctamente"
+        ], 200);
     }
 }

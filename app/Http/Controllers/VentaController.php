@@ -3,62 +3,55 @@
 namespace App\Http\Controllers;
 
 use App\Services\VentaService;
-use App\Http\Requests\StoreVentaRequest;
-use App\Http\Requests\UpdateVentaRequest;
+use App\Http\Requests\Venta\StoreVentaRequest;
+use App\Http\Requests\Venta\UpdateVentaRequest;
 
 class VentaController extends Controller
 {
-    public function __construct(private VentaService $ventaServicio)
+    protected VentaService $ventaService;
+
+    public function __construct(VentaService $ventaService)
     {
+        $this->ventaService = $ventaService;
     }
 
     public function index()
     {
-        return response()->json([
-            "success" => "Se listaron correctamente",
-            "data" => $this->ventaServicio->all()
-        ]);
+        return response()->json($this->ventaService->obtenerTodas(), 200);
     }
 
-    public function store(StoreVentaRequest $datos)
+    public function store(StoreVentaRequest $request)
     {
-        $registroInsertado = $this->ventaServicio->store(
-            $datos->validated()
-        );
+        $venta = $this->ventaService->crear($request->validated());
 
         return response()->json([
-            "success" => "La venta se creó correctamente",
-            "datosInsertado" => $registroInsertado
-        ]);
-    }
-
-    public function show(string $id)
-    {
-        return response()->json([
-            "data" => $this->ventaServicio->show((int) $id)
-        ]);
-    }
-
-    public function update(UpdateVentaRequest $datoActualizar, string $id)
-    {
-        $venta = $this->ventaServicio->update(
-            (int) $id,
-            $datoActualizar->validated()
-        );
-
-        return response()->json([
-            "success" => "La venta se actualizó correctamente",
+            "message" => "La venta se creó correctamente",
             "data" => $venta
-        ]);
+        ], 201);
     }
 
-    public function destroy(string $id)
+    public function show(string $id_venta)
     {
-        $venta = $this->ventaServicio->destroy((int) $id);
+        $venta = $this->ventaService->obtenerPorId($id_venta);
+        return response()->json($venta, 200);
+    }
+
+    public function update(UpdateVentaRequest $request, $id_venta)
+    {
+        $venta = $this->ventaService->actualizar($id_venta, $request->validated());
 
         return response()->json([
-            "success" => "La venta se eliminó correctamente",
+            "message" => "La venta se actualizó correctamente",
             "data" => $venta
-        ]);
+        ], 200);
+    }
+
+    public function destroy($id_venta)
+    {
+        $this->ventaService->eliminar($id_venta);
+
+        return response()->json([
+            "message" => "La venta se eliminó correctamente"
+        ], 200);
     }
 }

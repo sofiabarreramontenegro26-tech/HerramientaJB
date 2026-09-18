@@ -3,62 +3,55 @@
 namespace App\Http\Controllers;
 
 use App\Services\RegistroConectividadService;
-use App\Http\Requests\StoreRegistroConectividadRequest;
-use App\Http\Requests\UpdateRegistroConectividadRequest;
+use App\Http\Requests\RegistroConectividad\StoreRegistroConectividadRequest;
+use App\Http\Requests\RegistroConectividad\UpdateRegistroConectividadRequest;
 
 class RegistroConectividadController extends Controller
 {
-    public function __construct(private RegistroConectividadService $registroConectividadServicio)
+    protected RegistroConectividadService $registroConectividadService;
+
+    public function __construct(RegistroConectividadService $registroConectividadService)
     {
+        $this->registroConectividadService = $registroConectividadService;
     }
 
     public function index()
     {
-        return response()->json([
-            "success" => "Se listaron correctamente",
-            "data" => $this->registroConectividadServicio->all()
-        ]);
+        return response()->json($this->registroConectividadService->obtenerTodas(), 200);
     }
 
-    public function store(StoreRegistroConectividadRequest $datos)
+    public function store(StoreRegistroConectividadRequest $request)
     {
-        $registroInsertado = $this->registroConectividadServicio->store(
-            $datos->validated()
-        );
+        $registroConectividad = $this->registroConectividadService->crear($request->validated());
 
         return response()->json([
-            "success" => "El registro de conectividad se creó correctamente",
-            "datosInsertado" => $registroInsertado
-        ]);
-    }
-
-    public function show(string $id)
-    {
-        return response()->json([
-            "data" => $this->registroConectividadServicio->show((int) $id)
-        ]);
-    }
-
-    public function update(UpdateRegistroConectividadRequest $datoActualizar, string $id)
-    {
-        $registroConectividad = $this->registroConectividadServicio->update(
-            (int) $id,
-            $datoActualizar->validated()
-        );
-
-        return response()->json([
-            "success" => "El registro de conectividad se actualizó correctamente",
+            "message" => "El registro de conectividad se creó correctamente",
             "data" => $registroConectividad
-        ]);
+        ], 201);
     }
 
-    public function destroy(string $id)
+    public function show(string $id_registro_conectividad)
     {
-        $registroConectividad = $this->registroConectividadServicio->destroy((int) $id);
+        $registroConectividad = $this->registroConectividadService->obtenerPorId($id_registro_conectividad);
+        return response()->json($registroConectividad, 200);
+    }
+
+    public function update(UpdateRegistroConectividadRequest $request, $id_registro_conectividad)
+    {
+        $registroConectividad = $this->registroConectividadService->actualizar($id_registro_conectividad, $request->validated());
 
         return response()->json([
-            "success" => "El registro de conectividad se eliminó correctamente",
+            "message" => "El registro de conectividad se actualizó correctamente",
             "data" => $registroConectividad
-        ]);
+        ], 200);
+    }
+
+    public function destroy($id_registro_conectividad)
+    {
+        $this->registroConectividadService->eliminar($id_registro_conectividad);
+
+        return response()->json([
+            "message" => "El registro de conectividad se eliminó correctamente"
+        ], 200);
     }
 }
