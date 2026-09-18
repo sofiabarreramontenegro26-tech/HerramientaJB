@@ -11,6 +11,7 @@ use App\Interfaces\CategoriaInterface;
 use App\Interfaces\ProveedorInterface;
 use App\Interfaces\ProductoInterface;
 
+
 // Repositorios
 use App\Repositories\UsuarioRepository;
 use App\Repositories\RolRepository;
@@ -18,6 +19,7 @@ use App\Repositories\HistorialActividadRepository;
 use App\Repositories\CategoriaRepository;
 use App\Repositories\ProveedorRepository;
 use App\Repositories\ProductoRepository;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CategoriaInterface::class, CategoriaRepository::class);
         $this->app->bind(ProveedorInterface::class, ProveedorRepository::class);
         $this->app->bind(ProductoInterface::class, ProductoRepository::class);
+        $this->app->bind(EntradaInterface::class, EntradaRepository::class);
     }
 
     public function boot(): void

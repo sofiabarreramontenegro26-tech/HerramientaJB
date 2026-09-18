@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Services\EntradaService;
-use App\Http\Requests\Entrada\StoreEntradaRequest;
-use App\Http\Requests\Entrada\UpdateEntradaRequest;
+use App\Http\Requests\StoreEntradaRequest;
+use App\Http\Requests\UpdateEntradaRequest;
 
 class EntradaController extends Controller
 {
@@ -17,7 +17,7 @@ class EntradaController extends Controller
 
     public function index()
     {
-        return response()->json($this->entradaService->list(), 200);
+        return response()->json($this->entradaService->all(), 200);
     }
 
     public function store(StoreEntradaRequest $request)
@@ -39,7 +39,9 @@ class EntradaController extends Controller
 
     public function update(UpdateEntradaRequest $request, $id_entrada)
     {
-        $entrada = $this->entradaService->update((int) $id_entrada, $request->validated());
+        $data = $request->validated();
+    
+        $entrada = $this->entradaService->update($data, (int) $id_entrada);
 
         return response()->json([
             'message' => 'Entrada actualizada correctamente',
