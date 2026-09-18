@@ -61,4 +61,8 @@ Route::patch('/productos/{producto}', [ProductoController::class, 'update']);
 Route::put('/entradas/{entrada}', [EntradaController::class, 'update']);
 Route::patch('/entradas/{entrada}', [EntradaController::class, 'update']);
 
+Route::put('/movimientos-inventario/{movimiento-inventario}', [MovimientoInventarioController::class, 'update']);
+Route::patch('/movimientos-inventario/{movimiento-inventario}', [MovimientoInventarioController::class, 'update']);
+
+
 
