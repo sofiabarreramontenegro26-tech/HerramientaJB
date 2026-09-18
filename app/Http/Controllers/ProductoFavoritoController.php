@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Services\ProductoFavoritoService;
-use App\Http\Requests\ProductoFavorito\StoreProductoFavoritoRequest;
-use App\Http\Requests\ProductoFavorito\UpdateProductoFavoritoRequest;
+use App\Http\Requests\StoreProductoFavoritoRequest;
+use App\Http\Requests\UpdateProductoFavoritoRequest;
 
 class ProductoFavoritoController extends Controller
 {
@@ -17,12 +17,12 @@ class ProductoFavoritoController extends Controller
 
     public function index()
     {
-        return response()->json($this->productoFavoritoService->obtenerTodas(), 200);
+        return response()->json($this->productoFavoritoService->all(), 200);
     }
 
     public function store(StoreProductoFavoritoRequest $request)
     {
-        $productoFavorito = $this->productoFavoritoService->crear($request->validated());
+        $productoFavorito = $this->productoFavoritoService->store($request->validated());
 
         return response()->json([
             "message" => "El producto se agregó a favoritos correctamente",
@@ -32,13 +32,13 @@ class ProductoFavoritoController extends Controller
 
     public function show(string $id_producto_favorito)
     {
-        $productoFavorito = $this->productoFavoritoService->obtenerPorId($id_producto_favorito);
+        $productoFavorito = $this->productoFavoritoService->show($id_producto_favorito);
         return response()->json($productoFavorito, 200);
     }
 
     public function update(UpdateProductoFavoritoRequest $request, $id_producto_favorito)
     {
-        $productoFavorito = $this->productoFavoritoService->actualizar($id_producto_favorito, $request->validated());
+        $productoFavorito = $this->productoFavoritoService->update($request->validated(), (int) $id_producto_favorito);
 
         return response()->json([
             "message" => "El producto favorito se actualizó correctamente",
@@ -48,7 +48,7 @@ class ProductoFavoritoController extends Controller
 
     public function destroy($id_producto_favorito)
     {
-        $this->productoFavoritoService->eliminar($id_producto_favorito);
+        $this->productoFavoritoService->destroy((int) $id_producto_favorito);
 
         return response()->json([
             "message" => "El producto se eliminó de favoritos correctamente"

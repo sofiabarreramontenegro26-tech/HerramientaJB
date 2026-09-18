@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Services\EntradaService;
-use App\Http\Requests\Entrada\StoreEntradaRequest;
-use App\Http\Requests\Entrada\UpdateEntradaRequest;
+use App\Http\Requests\StoreEntradaRequest;
+use App\Http\Requests\UpdateEntradaRequest;
 
 class EntradaController extends Controller
 {

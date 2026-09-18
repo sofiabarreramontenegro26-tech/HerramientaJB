@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Services\AlertaInventarioService;
-use App\Http\Requests\AlertaInventario\StoreAlertaInventarioRequest;
-use App\Http\Requests\AlertaInventario\UpdateAlertaInventarioRequest;
+use App\Http\Requests\StoreAlertaInventarioRequest;
+use App\Http\Requests\UpdateAlertaInventarioRequest;
 
 class AlertaInventarioController extends Controller
 {

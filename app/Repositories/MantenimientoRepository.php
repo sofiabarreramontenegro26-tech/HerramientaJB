@@ -11,4 +11,33 @@ class MantenimientoRepository extends BaseRepository implements MantenimientoInt
     {
         parent::__construct($model);
     }
+
+    public function getAll()
+    {
+        return Mantenimiento::all();
+    }
+
+    public function getById(int $id)
+    {
+        return Mantenimiento::findOrFail($id);
+    }
+
+    public function create(array $data)
+    {
+        return Mantenimiento::create($data);
+    }
+
+    public function update(array $data, int $id)
+    {
+        $mantenimiento = $this->getById($id);
+        $mantenimiento->update($data);
+        return $mantenimiento;
+    }
+
+    public function delete(int $id)
+    {
+        $mantenimiento = $this->getById($id);
+        return $mantenimiento->delete();
+    }
+
 }

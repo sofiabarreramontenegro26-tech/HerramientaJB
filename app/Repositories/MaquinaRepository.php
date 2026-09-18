@@ -12,4 +12,32 @@ class MaquinaRepository extends BaseRepository implements MaquinaInterface
         parent::__construct($model);
     }
 
+    public function getAll()
+    {
+        return Maquina::all();
+    }
+
+    public function getById(int $id)
+    {
+        return Maquina::findOrFail($id);
+    }
+
+    public function create(array $data)
+    {
+        return Maquina::create($data);
+    }
+
+    public function update(array $data, int $id)
+    {
+        $maquina = $this->getById($id);
+        $maquina->update($data);
+        return $maquina;
+    }
+
+    public function delete(int $id)
+    {
+        $maquina = $this->getById($id);
+        return $maquina->delete();
+    }
+
 }

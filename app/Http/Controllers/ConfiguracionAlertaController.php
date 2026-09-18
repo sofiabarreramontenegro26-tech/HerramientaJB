@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Services\ConfiguracionAlertaService;
-use App\Http\Requests\ConfiguracionAlerta\StoreConfiguracionAlertaRequest;
-use App\Http\Requests\ConfiguracionAlerta\UpdateConfiguracionAlertaRequest;
+use App\Http\Requests\StoreConfiguracionAlertaRequest;
+use App\Http\Requests\UpdateConfiguracionAlertaRequest;
 
 class ConfiguracionAlertaController extends Controller
 {

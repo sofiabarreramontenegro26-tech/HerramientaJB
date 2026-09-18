@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Services\CatalogoBusquedaService;
-use App\Http\Requests\CatalogoBusqueda\StoreCatalogoBusquedaRequest;
-use App\Http\Requests\CatalogoBusqueda\UpdateCatalogoBusquedaRequest;
+use App\Http\Requests\StoreCatalogoBusquedaRequest;
+use App\Http\Requests\UpdateCatalogoBusquedaRequest;
 
 class CatalogoBusquedaController extends Controller
 {

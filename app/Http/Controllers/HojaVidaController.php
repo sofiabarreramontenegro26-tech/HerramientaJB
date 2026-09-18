@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Services\HojaVidaService;
-use App\Http\Requests\HojaVida\StoreHojaVidaRequest;
-use App\Http\Requests\HojaVida\UpdateHojaVidaRequest;
+use App\Http\Requests\StoreHojaVidaRequest;
+use App\Http\Requests\UpdateHojaVidaRequest;
 
 class HojaVidaController extends Controller
 {
@@ -17,12 +17,12 @@ class HojaVidaController extends Controller
 
     public function index()
     {
-        return response()->json($this->hojaVidaService->obtenerTodas(), 200);
+        return response()->json($this->hojaVidaService->all(), 200);
     }
 
     public function store(StoreHojaVidaRequest $request)
     {
-        $hojaVida = $this->hojaVidaService->crear($request->validated());
+        $hojaVida = $this->hojaVidaService->store($request->validated());
 
         return response()->json([
             "message" => "La hoja de vida se creó correctamente",
@@ -32,13 +32,13 @@ class HojaVidaController extends Controller
 
     public function show(string $id_hoja_vida)
     {
-        $hojaVida = $this->hojaVidaService->obtenerPorId($id_hoja_vida);
+        $hojaVida = $this->hojaVidaService->show($id_hoja_vida);
         return response()->json($hojaVida, 200);
     }
 
     public function update(UpdateHojaVidaRequest $request, $id_hoja_vida)
     {
-        $hojaVida = $this->hojaVidaService->actualizar($id_hoja_vida, $request->validated());
+        $hojaVida = $this->hojaVidaService->update($request->validated(), (int) $id_hoja_vida);
 
         return response()->json([
             "message" => "La hoja de vida se actualizó correctamente",
@@ -48,7 +48,7 @@ class HojaVidaController extends Controller
 
     public function destroy($id_hoja_vida)
     {
-        $this->hojaVidaService->eliminar($id_hoja_vida);
+        $this->hojaVidaService->destroy((int) $id_hoja_vida);
 
         return response()->json([
             "message" => "La hoja de vida se eliminó correctamente"

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Services\MovimientoInventarioService;
-use App\Http\Requests\MovimientoInventario\StoreMovimientoInventarioRequest;
-use App\Http\Requests\MovimientoInventario\UpdateMovimientoInventarioRequest;
+use App\Http\Requests\StoreMovimientoInventarioRequest;
+use App\Http\Requests\UpdateMovimientoInventarioRequest;
 
 class MovimientoInventarioController extends Controller
 {
@@ -17,7 +17,7 @@ class MovimientoInventarioController extends Controller
 
     public function index()
     {
-        return response()->json($this->movimientoInventarioService->list(), 200);
+        return response()->json($this->movimientoInventarioService->all(), 200);
     }
 
     public function store(StoreMovimientoInventarioRequest $request)

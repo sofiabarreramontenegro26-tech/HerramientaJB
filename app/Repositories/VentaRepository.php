@@ -11,4 +11,33 @@ class VentaRepository extends BaseRepository implements VentaInterface
     {
         parent::__construct($model);
     }
+
+    public function getAll()
+    {
+        return Venta::all();
+    }
+
+    public function getById(int $id)
+    {
+        return Venta::findOrFail($id);
+    }
+
+    public function create(array $data)
+    {
+        return Venta::create($data);
+    }
+
+    public function update(array $data, int $id)
+    {
+        $venta = $this->getById($id);
+        $venta->update($data);
+        return $venta;
+    }
+
+    public function delete(int $id)
+    {
+        $venta = $this->getById($id);
+        return $venta->delete();
+    }
+    
 }
