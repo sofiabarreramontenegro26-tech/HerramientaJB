@@ -11,4 +11,32 @@ class HojaVidaRepository extends BaseRepository implements HojaVidaInterface
     {
         parent::__construct($model);
     }
+
+    public function getAll()
+    {
+        return HojaVida::all();
+    }
+
+    public function getById(int $id)
+    {
+        return HojaVida::findOrFail($id);
+    }
+
+    public function create(array $data)
+    {
+        return HojaVida::create($data);
+    }
+
+    public function update(array $data, int $id)
+    {
+        $hojaVida = $this->getById($id);
+        $hojaVida->update($data);
+        return $hojaVida;
+    }
+
+    public function delete(int $id)
+    {
+        $hojaVida = $this->getById($id);
+        return $hojaVida->delete();
+    }
 }

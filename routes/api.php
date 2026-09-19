@@ -58,6 +58,26 @@ Route::patch('/proveedores/{proveedor}', [ProveedorController::class, 'update'])
 Route::put('/productos/{producto}', [ProductoController::class, 'update']);
 Route::patch('/productos/{producto}', [ProductoController::class, 'update']);
 
+Route::put('/productos-favoritos/{producto_favorito}', [ProductoFavoritoController::class, 'update']);
+Route::patch('/productos-favoritos/{producto_favorito}', [ProductoFavoritoController::class, 'update']);    
+
+Route::put('/cotizaciones/{cotizacion}', [CotizacionController::class, 'update']);
+Route::patch('/cotizaciones/{cotizacion}', [CotizacionController::class, 'update']);
+
+Route::put('/ventas/{venta}', [VentaController::class, 'update']);  
+Route::patch('/ventas/{venta}', [VentaController::class, 'update']);  
+
+Route::put('/maquinas/{maquina}', [MaquinaController::class, 'update']);
+Route::patch('/maquinas/{maquina}', [MaquinaController::class, 'update']);
+
+Route::put('/hojas-vida/{hoja_vida}', [HojaVidaController::class, 'update']);
+Route::patch('/hojas-vida/{hoja_vida}', [HojaVidaController::class, 'update']);
+
+Route::put('/mantenimientos/{mantenimiento}', [MantenimientoController::class, 'update']);
+Route::patch('/mantenimientos/{mantenimiento}', [MantenimientoController::class, 'update']);    
+
+Route::put('/registros-conectividad/{registro_conectividad}', [RegistroConectividadController::class, 'update']);
+Route::patch('/registros-conectividad/{registro_conectividad}', [RegistroConectividadController::class, 'update']); 
 Route::put('/entradas/{entrada}', [EntradaController::class, 'update']);
 Route::patch('/entradas/{entrada}', [EntradaController::class, 'update']);
 

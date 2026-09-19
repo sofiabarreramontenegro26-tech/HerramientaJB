@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Services\MaquinaService;
-use App\Http\Requests\Maquina\StoreMaquinaRequest;
-use App\Http\Requests\Maquina\UpdateMaquinaRequest;
+use App\Http\Requests\StoreMaquinaRequest;
+use App\Http\Requests\UpdateMaquinaRequest;
 
 class MaquinaController extends Controller
 {
@@ -17,12 +17,12 @@ class MaquinaController extends Controller
 
     public function index()
     {
-        return response()->json($this->maquinaService->obtenerTodas(), 200);
+        return response()->json($this->maquinaService->all(), 200);
     }
 
     public function store(StoreMaquinaRequest $request)
     {
-        $maquina = $this->maquinaService->crear($request->validated());
+        $maquina = $this->maquinaService->store($request->validated());
 
         return response()->json([
             "message" => "La máquina se creó correctamente",
@@ -32,13 +32,13 @@ class MaquinaController extends Controller
 
     public function show(string $id_maquina)
     {
-        $maquina = $this->maquinaService->obtenerPorId($id_maquina);
+        $maquina = $this->maquinaService->show($id_maquina);
         return response()->json($maquina, 200);
     }
 
     public function update(UpdateMaquinaRequest $request, $id_maquina)
     {
-        $maquina = $this->maquinaService->actualizar($id_maquina, $request->validated());
+        $maquina = $this->maquinaService->update($request->validated(), (int) $id_maquina);
 
         return response()->json([
             "message" => "La máquina se actualizó correctamente",
@@ -48,7 +48,7 @@ class MaquinaController extends Controller
 
     public function destroy($id_maquina)
     {
-        $this->maquinaService->eliminar($id_maquina);
+        $this->maquinaService->destroy((int) $id_maquina);
 
         return response()->json([
             "message" => "La máquina se eliminó correctamente"

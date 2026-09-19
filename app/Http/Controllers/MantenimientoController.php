@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Services\MantenimientoService;
-use App\Http\Requests\Mantenimiento\StoreMantenimientoRequest;
-use App\Http\Requests\Mantenimiento\UpdateMantenimientoRequest;
+use App\Http\Requests\StoreMantenimientoRequest;
+use App\Http\Requests\UpdateMantenimientoRequest;
 
 class MantenimientoController extends Controller
 {
@@ -17,12 +17,12 @@ class MantenimientoController extends Controller
 
     public function index()
     {
-        return response()->json($this->mantenimientoService->obtenerTodas(), 200);
+        return response()->json($this->mantenimientoService->all(), 200);
     }
 
     public function store(StoreMantenimientoRequest $request)
     {
-        $mantenimiento = $this->mantenimientoService->crear($request->validated());
+        $mantenimiento = $this->mantenimientoService->store($request->validated());
 
         return response()->json([
             "message" => "El mantenimiento se registró correctamente",
@@ -32,13 +32,13 @@ class MantenimientoController extends Controller
 
     public function show(string $id_mantenimiento)
     {
-        $mantenimiento = $this->mantenimientoService->obtenerPorId($id_mantenimiento);
+        $mantenimiento = $this->mantenimientoService->show($id_mantenimiento);
         return response()->json($mantenimiento, 200);
     }
 
     public function update(UpdateMantenimientoRequest $request, $id_mantenimiento)
     {
-        $mantenimiento = $this->mantenimientoService->actualizar($id_mantenimiento, $request->validated());
+        $mantenimiento = $this->mantenimientoService->update($request->validated(), (int) $id_mantenimiento);
 
         return response()->json([
             "message" => "El mantenimiento se actualizó correctamente",
@@ -48,7 +48,7 @@ class MantenimientoController extends Controller
 
     public function destroy($id_mantenimiento)
     {
-        $this->mantenimientoService->eliminar($id_mantenimiento);
+        $this->mantenimientoService->destroy((int) $id_mantenimiento);
 
         return response()->json([
             "message" => "El mantenimiento se eliminó correctamente"

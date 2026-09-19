@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Services\VentaService;
-use App\Http\Requests\Venta\StoreVentaRequest;
-use App\Http\Requests\Venta\UpdateVentaRequest;
+use App\Http\Requests\StoreVentaRequest;
+use App\Http\Requests\UpdateVentaRequest;
 
 class VentaController extends Controller
 {
@@ -17,12 +17,12 @@ class VentaController extends Controller
 
     public function index()
     {
-        return response()->json($this->ventaService->obtenerTodas(), 200);
+        return response()->json($this->ventaService->all(), 200);
     }
 
     public function store(StoreVentaRequest $request)
     {
-        $venta = $this->ventaService->crear($request->validated());
+        $venta = $this->ventaService->store($request->validated());
 
         return response()->json([
             "message" => "La venta se creó correctamente",
@@ -32,13 +32,13 @@ class VentaController extends Controller
 
     public function show(string $id_venta)
     {
-        $venta = $this->ventaService->obtenerPorId($id_venta);
+        $venta = $this->ventaService->show($id_venta);
         return response()->json($venta, 200);
     }
 
     public function update(UpdateVentaRequest $request, $id_venta)
     {
-        $venta = $this->ventaService->actualizar($id_venta, $request->validated());
+        $venta = $this->ventaService->update($request->validated(), (int) $id_venta);
 
         return response()->json([
             "message" => "La venta se actualizó correctamente",
@@ -48,7 +48,7 @@ class VentaController extends Controller
 
     public function destroy($id_venta)
     {
-        $this->ventaService->eliminar($id_venta);
+        $this->ventaService->destroy((int)$id_venta);
 
         return response()->json([
             "message" => "La venta se eliminó correctamente"
