@@ -30,8 +30,8 @@ class RegistroConectividadService
         return $this->registroConectividadRepository->update($id, $data);
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id_registro_conectividad)
     {
-        return $this->registroConectividadRepository->delete($id);
+        return $this->registroConectividadRepository->delete($id_registro_conectividad);
     }
 }

@@ -30,8 +30,8 @@ class CotizacionService
         return $this->cotizacionRepository->update($id, $data);
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id_cotizacion)
     {
-        return $this->cotizacionRepository->delete($id);
+        return $this->cotizacionRepository->delete($id_cotizacion);
     }
 }

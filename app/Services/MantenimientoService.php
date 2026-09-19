@@ -30,8 +30,8 @@ class MantenimientoService
         return $this->mantenimientoRepository->update($id, $data);
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id_mantenimiento)
     {
-        return $this->mantenimientoRepository->delete($id);
+        return $this->mantenimientoRepository->delete($id_mantenimiento);
     }
 }

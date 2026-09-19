@@ -30,8 +30,8 @@ class ProductoFavoritoService
         return $this->productoFavoritoRepository->update($id, $data);
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id_producto_favorito)
     {
-        return $this->productoFavoritoRepository->delete($id);
+        return $this->productoFavoritoRepository->delete($id_producto_favorito);
     }
 }
