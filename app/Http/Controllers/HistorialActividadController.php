@@ -39,8 +39,8 @@ class HistorialActividadController extends Controller
 
     public function update(UpdateHistorialActividadRequest $request, $id_historial)
 {
-    $actividad = $this->historialActividadService->update
-    ($request->validated(), (int) $id_historial);
+        $data = $request->validated();
+        $historialActividad = $this->historialActividadService->update((int) $id_historial, $data);
 
     return response()->json([
         'message' => 'Historial actualizado correctamente',

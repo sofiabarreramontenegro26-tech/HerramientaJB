@@ -39,7 +39,8 @@ class UsuarioController extends Controller
 
     public function update(UpdateUsuarioRequest $request, $id_usuario)
     {
-        $usuario = $this->usuarioService->update($request->validated(),(int) $id_usuario);
+        $data = $request->validated();
+        $usuario = $this->usuarioService->update((int) $id_usuario, $data);
 
         return response()->json([
             'message' => 'Usuario actualizado correctamente',

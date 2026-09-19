@@ -38,7 +38,8 @@ class MantenimientoController extends Controller
 
     public function update(UpdateMantenimientoRequest $request, $id_mantenimiento)
     {
-        $mantenimiento = $this->mantenimientoService->update($request->validated(), (int) $id_mantenimiento);
+        $data = $request->validated();
+        $mantenimiento = $this->mantenimientoService->update((int) $id_mantenimiento, $data);
 
         return response()->json([
             "message" => "El mantenimiento se actualizó correctamente",

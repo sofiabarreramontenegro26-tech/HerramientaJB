@@ -38,7 +38,8 @@ class HojaVidaController extends Controller
 
     public function update(UpdateHojaVidaRequest $request, $id_hoja_vida)
     {
-        $hojaVida = $this->hojaVidaService->update($request->validated(), (int) $id_hoja_vida);
+        $data = $request->validated();
+        $hojaVida = $this->hojaVidaService->update((int) $id_hoja_vida, $data);
 
         return response()->json([
             "message" => "La hoja de vida se actualizó correctamente",
