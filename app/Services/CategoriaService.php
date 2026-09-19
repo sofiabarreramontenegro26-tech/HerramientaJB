@@ -25,7 +25,7 @@ class CategoriaService
         return $this->categoriaRepository->create($data);
     }
 
-    public function update(array $data, int $id_categoria)
+    public function update(int $id, array $data)
     {
         return $this->categoriaRepository->update($data, $id_categoria);
     }

@@ -25,7 +25,7 @@ class AlertaInventarioService
         return $this->alertaInventarioRepository->create($data);
     }
 
-    public function update(array $data, int $id)
+    public function update(int $id, array $data)
     {
         return $this->alertaInventarioRepository->update($data, $id);
     }

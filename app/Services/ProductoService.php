@@ -25,7 +25,7 @@ class ProductoService
         return $this->productoRepository->create($data);
     }
 
-    public function update(array $data, int $id)
+    public function update(int $id, array $data)
     {
         return $this->productoRepository->update($data, $id);
     }

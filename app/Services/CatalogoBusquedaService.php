@@ -25,7 +25,7 @@ class CatalogoBusquedaService
         return $this->catalogoBusquedaRepository->create($data);
     }
 
-    public function update(array $data, int $id)
+    public function update(int $id, array $data)
     {
         return $this->catalogoBusquedaRepository->update($data, $id);
     }
