@@ -27,7 +27,7 @@ class MovimientoInventarioService
 
     public function update(int $id, array $data)
     {
-        return $this->movimientoInventarioRepository->update($data, $id);
+        return $this->movimientoInventarioRepository->update($id, $data);
     }
 
     public function destroy(int $id_movimiento)

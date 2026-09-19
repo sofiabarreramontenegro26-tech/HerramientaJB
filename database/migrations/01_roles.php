@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id('id_rol');
             $table->string('nombre', 100); //no tiene llave foranea
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

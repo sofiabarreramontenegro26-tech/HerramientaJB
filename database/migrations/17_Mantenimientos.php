@@ -34,6 +34,7 @@ return new class extends Migration
 
             //created_at (Fecha y hora de guardado) y updated_at (Fecha de edición)
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

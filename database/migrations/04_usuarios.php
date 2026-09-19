@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('contraseña', 255);
             $table->foreignId('id_rol')->nullable()->constrained('roles', 'id_rol')->onDelete('set null'); // Llave foranea
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

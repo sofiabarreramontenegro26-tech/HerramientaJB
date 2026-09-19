@@ -52,6 +52,7 @@ return new class extends Migration
 
             // timestamps (created_at / updated_at)
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
