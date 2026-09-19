@@ -39,7 +39,8 @@ class ProveedorController extends Controller
 
     public function update(UpdateProveedorRequest $request, $id_proveedor)
     {
-        $proveedor = $this->proveedorService->update($request->validated(),(int) $id_proveedor);
+        $data = $request->validated();
+        $proveedor = $this->proveedorService->update((int) $id_proveedor, $data);
 
         return response()->json([
             'message' => 'Proveedor actualizado correctamente',

@@ -39,9 +39,9 @@ class EntradaController extends Controller
 
     public function update(UpdateEntradaRequest $request, $id_entrada)
     {
+
         $data = $request->validated();
-    
-        $entrada = $this->entradaService->update($data, (int) $id_entrada);
+        $entrada = $this->entradaService->update((int) $id_entrada, $data);
 
         return response()->json([
             'message' => 'Entrada actualizada correctamente',

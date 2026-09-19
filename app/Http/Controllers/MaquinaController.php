@@ -38,7 +38,8 @@ class MaquinaController extends Controller
 
     public function update(UpdateMaquinaRequest $request, $id_maquina)
     {
-        $maquina = $this->maquinaService->update($request->validated(), (int) $id_maquina);
+        $data = $request->validated();
+        $maquina = $this->maquinaService->update((int) $id_maquina, $data);
 
         return response()->json([
             "message" => "La máquina se actualizó correctamente",

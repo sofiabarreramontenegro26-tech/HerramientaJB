@@ -39,8 +39,9 @@ class CategoriaController extends Controller
 
     public function update(UpdateCategoriaRequest $request, $id_categoria)
     {
-        $categoria = $this->categoriaService->update(
-        $request->validated(),(int) $id_categoria);
+        
+        $data = $request->validated();
+        $categoria = $this->categoriaService->update((int) $id_categoria, $data);
 
         return response()->json([
             'message' => 'Categoría actualizada correctamente',

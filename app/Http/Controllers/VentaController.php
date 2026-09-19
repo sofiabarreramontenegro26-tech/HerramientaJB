@@ -38,7 +38,8 @@ class VentaController extends Controller
 
     public function update(UpdateVentaRequest $request, $id_venta)
     {
-        $venta = $this->ventaService->update($request->validated(), (int) $id_venta);
+        $data = $request->validated();
+        $venta = $this->ventaService->update((int) $id_venta, $data);
 
         return response()->json([
             "message" => "La venta se actualizó correctamente",

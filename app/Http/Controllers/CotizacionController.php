@@ -38,7 +38,9 @@ class CotizacionController extends Controller
 
     public function update(UpdateCotizacionRequest $request, $id_cotizacion)
     {
-        $cotizacion = $this->cotizacionService->update($request->validated(), (int) $id_cotizacion);
+        
+        $data = $request->validated();
+        $cotizacion = $this->cotizacionService->update((int) $id_cotizacion, $data);
 
         return response()->json([
             "message" => "La cotización se actualizó correctamente",

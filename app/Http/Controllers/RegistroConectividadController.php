@@ -38,7 +38,8 @@ class RegistroConectividadController extends Controller
 
     public function update(UpdateRegistroConectividadRequest $request, $id_registro_conectividad)
     {
-        $registroConectividad = $this->registroConectividadService->update($request->validated(), (int) $id_registro_conectividad);
+        $data = $request->validated();
+        $registroConectividad = $this->registroConectividadService->update((int) $id_registro_conectividad, $data);
 
         return response()->json([
             "message" => "El registro de conectividad se actualizó correctamente",

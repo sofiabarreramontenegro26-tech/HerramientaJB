@@ -41,7 +41,7 @@ class ConfiguracionAlertaController extends Controller
     {
         $data = $request->validated();
 
-        $configuracion = $this->configuracionAlertaService->update($data, (int) $id_movimiento);
+        $configuracion = $this->configuracionAlertaService->update((int) $id_movimiento, $data);
 
         return response()->json([
             'message' => 'Configuración de alerta actualizada correctamente',

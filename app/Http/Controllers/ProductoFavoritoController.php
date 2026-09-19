@@ -38,7 +38,8 @@ class ProductoFavoritoController extends Controller
 
     public function update(UpdateProductoFavoritoRequest $request, $id_producto_favorito)
     {
-        $productoFavorito = $this->productoFavoritoService->update($request->validated(), (int) $id_producto_favorito);
+        $data = $request->validated();
+        $productoFavorito = $this->productoFavoritoService->update((int) $id_producto_favorito, $data);
 
         return response()->json([
             "message" => "El producto favorito se actualizó correctamente",
