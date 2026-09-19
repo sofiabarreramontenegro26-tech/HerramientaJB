@@ -30,8 +30,8 @@ class VentaService
         return $this->ventaRepository->update($id, $data);
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id_venta)
     {
-        return $this->ventaRepository->delete($id);
+        return $this->ventaRepository->delete($id_venta);
     }
 }

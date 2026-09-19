@@ -30,8 +30,8 @@ class HojaVidaService
         return $this->hojaVidaRepository->update($id, $data);
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id_hoja_vida)
     {
-        return $this->hojaVidaRepository->delete($id);
+        return $this->hojaVidaRepository->delete($id_hoja_vida);
     }
 }

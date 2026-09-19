@@ -30,8 +30,8 @@ class MaquinaService
         return $this->maquinaRepository->update($id, $data);
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id_maquina)
     {
-        return $this->maquinaRepository->delete($id);
+        return $this->maquinaRepository->delete($id_maquina);
     }
 }
