@@ -27,7 +27,7 @@ class RolRepository extends BaseRepository implements RolInterface
         return Rol::create($data);
     }
 
-    public function update(array $data, int $id)
+    public function update(int $id, array $data)
     {
         $rol = $this->getById($id);
         $rol->update($data);

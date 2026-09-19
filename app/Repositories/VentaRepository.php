@@ -27,7 +27,7 @@ class VentaRepository extends BaseRepository implements VentaInterface
         return Venta::create($data);
     }
 
-    public function update(array $data, int $id)
+    public function update(int $id, array $data)
     {
         $venta = $this->getById($id);
         $venta->update($data);

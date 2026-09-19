@@ -29,7 +29,7 @@ class BaseRepository implements BaseInterface
         return $this->model->find($id);
     }
 
-    public function update(array $data, int $id)
+    public function update(int $id, array $data )
     {
         $registro = $this->model->find($id); 
 

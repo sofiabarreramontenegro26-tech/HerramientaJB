@@ -28,7 +28,7 @@ class ProveedorRepository extends BaseRepository implements ProveedorInterface
         return Proveedor::create($data);
     }
 
-    public function update(array $data, int $id)
+    public function update(int $id, array $data)
     {
         $proveedor = $this->getById($id);
         $proveedor->update($data);

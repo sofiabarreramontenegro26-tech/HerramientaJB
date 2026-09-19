@@ -27,7 +27,7 @@ class AlertaInventarioRepository extends BaseRepository implements AlertaInventa
         return AlertaInventario::create($data);
     }
 
-    public function update(array $data, int $id)
+    public function update(int $id, array $data)
     {
         $alerta = $this->getById($id);
         $alerta->update($data);

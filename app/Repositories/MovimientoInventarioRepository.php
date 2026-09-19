@@ -27,7 +27,7 @@ class MovimientoInventarioRepository extends BaseRepository implements Movimient
         return MovimientoInventario::create($data);
     }
 
-    public function update(array $data, int $id)
+    public function update(int $id, array $data)
     {
         $movimiento = $this->getById($id);
         $movimiento->update($data);

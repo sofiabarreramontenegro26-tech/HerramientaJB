@@ -27,7 +27,7 @@ class MantenimientoRepository extends BaseRepository implements MantenimientoInt
         return Mantenimiento::create($data);
     }
 
-    public function update(array $data, int $id)
+    public function update(int $id, array $data)
     {
         $mantenimiento = $this->getById($id);
         $mantenimiento->update($data);

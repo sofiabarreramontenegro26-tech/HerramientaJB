@@ -27,7 +27,7 @@ class ConfiguracionAlertaRepository extends BaseRepository implements Configurac
         return ConfiguracionAlerta::create($data);
     }
 
-    public function update(array $data, int $id)
+    public function update(int $id, array $data)
     {
         $configuracionAlerta = $this->getById($id);
         $configuracionAlerta->update($data);

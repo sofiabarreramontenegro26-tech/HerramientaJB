@@ -27,7 +27,7 @@ class CotizacionRepository extends BaseRepository implements CotizacionInterface
         return Cotizacion::create($data);
     }
 
-    public function update(array $data, int $id)
+    public function update(int $id, array $data)
     {
         $cotizacion = $this->getById($id);
         $cotizacion->update($data);
