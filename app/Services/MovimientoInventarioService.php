@@ -10,14 +10,14 @@ class MovimientoInventarioService
         private MovimientoInventarioInterface $movimientoInventarioRepository
     ) {}
 
-    public function list()
+    public function all()
     {
-        return $this->movimientoInventarioRepository->all();
+        return $this->movimientoInventarioRepository->getAll();
     }
 
     public function show(int $id)
     {
-        return $this->movimientoInventarioRepository->find($id);
+        return $this->movimientoInventarioRepository->getById($id);
     }
 
     public function store(array $data)
@@ -25,13 +25,13 @@ class MovimientoInventarioService
         return $this->movimientoInventarioRepository->create($data);
     }
 
-    public function update(int $id, array $data)
+    public function update(array $data, int $id)
     {
-        return $this->movimientoInventarioRepository->update($id, $data);
+        return $this->movimientoInventarioRepository->update($data, $id);
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id_movimiento)
     {
-        return $this->movimientoInventarioRepository->delete($id);
+        return $this->movimientoInventarioRepository->delete($id_movimiento);
     }
 }

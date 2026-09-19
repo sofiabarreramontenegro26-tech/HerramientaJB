@@ -30,16 +30,19 @@ class MovimientoInventarioController extends Controller
         ], 201);
     }
 
-    public function show(int $id)
+    public function show($id_movimiento)
     {
-        $movimientoInventario = $this->movimientoInventarioService->show($id);
+        $movimientoInventario = $this->movimientoInventarioService->show((int) $id_movimiento);
 
         return response()->json($movimientoInventario, 200);
     }
 
-    public function update(UpdateMovimientoInventarioRequest $request, int $id)
+    public function update(UpdateMovimientoInventarioRequest $request, $id_movimiento)
     {
-        $movimientoInventario = $this->movimientoInventarioService->update($id, $request->validated());
+
+        $data = $request->validated();
+
+        $movimientoInventario = $this->movimientoInventarioService->update($data, (int) $id_movimiento);
 
         return response()->json([
             'message' => 'Movimiento de inventario actualizado correctamente',
@@ -47,9 +50,9 @@ class MovimientoInventarioController extends Controller
         ], 200);
     }
 
-    public function destroy(int $id)
+    public function destroy($id_movimiento)
     {
-        $this->movimientoInventarioService->destroy($id);
+        $this->movimientoInventarioService->destroy((int) $id_movimiento);
 
         return response()->json([
             'message' => 'Movimiento de inventario eliminado correctamente'

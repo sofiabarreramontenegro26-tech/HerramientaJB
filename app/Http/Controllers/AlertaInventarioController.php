@@ -17,7 +17,7 @@ class AlertaInventarioController extends Controller
 
     public function index()
     {
-        return response()->json($this->alertaService->list(), 200);
+        return response()->json($this->alertaService->all(), 200);
     }
 
     public function store(StoreAlertaInventarioRequest $request)
@@ -30,16 +30,18 @@ class AlertaInventarioController extends Controller
         ], 201);
     }
 
-    public function show(int $id_alerta)
+    public function show($id_alerta)
     {
-        $alerta = $this->alertaService->show($id_alerta);
+        $alerta = $this->alertaService->show((int)$id_alerta);
 
         return response()->json($alerta, 200);
     }
 
-    public function update(UpdateAlertaInventarioRequest $request, int $id_alerta)
+    public function update(UpdateAlertaInventarioRequest $request, $id_alerta)
     {
-        $alerta = $this->alertaService->update($id_alerta, $request->validated());
+        $data = $request->validated();
+    
+        $alerta = $this->alertaService->update($data, (int)$id_alerta);
 
         return response()->json([
             'message' => 'Alerta de inventario actualizada correctamente',
@@ -47,22 +49,12 @@ class AlertaInventarioController extends Controller
         ], 200);
     }
 
-    public function destroy(int $id_alerta)
+    public function destroy($id_alerta)
     {
-        $this->alertaService->destroy($id_alerta);
+        $this->alertaService->destroy((int)$id_alerta);
 
         return response()->json([
             'message' => 'Alerta de inventario eliminada correctamente'
-        ], 200);
-    }
-
-    public function marcarComoLeida(int $id_alerta)
-    {
-        $alerta = $this->alertaService->marcarComoLeida($id_alerta);
-
-        return response()->json([
-            'message' => 'Alerta marcada como leída',
-            'data' => $alerta
         ], 200);
     }
 }

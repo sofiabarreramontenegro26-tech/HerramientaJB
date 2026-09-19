@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Requests\MovimientoInventario;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class StoreMovimientoInventarioRequest extends FormRequest
 {
@@ -15,7 +14,7 @@ class StoreMovimientoInventarioRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tipo' => ['required', 'string', Rule::in(['ENTRADA', 'SALIDA'])],
+            'tipo' => ['required', 'string', 'in:ENTRADA,SALIDA'],
             'cantidad' => ['required', 'integer', 'min:1'],
             'motivo' => ['nullable', 'string', 'max:255'],
             'fecha' => ['required', 'date'],

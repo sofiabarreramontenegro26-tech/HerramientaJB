@@ -10,14 +10,14 @@ class CatalogoBusquedaService
         private CatalogoBusquedaInterface $catalogoBusquedaRepository
     ) {}
 
-    public function list()
+    public function all()
     {
-        return $this->catalogoBusquedaRepository->all();
+        return $this->catalogoBusquedaRepository->getAll();
     }
 
     public function show(int $id)
     {
-        return $this->catalogoBusquedaRepository->find($id);
+        return $this->catalogoBusquedaRepository->getById($id);
     }
 
     public function store(array $data)
@@ -25,19 +25,13 @@ class CatalogoBusquedaService
         return $this->catalogoBusquedaRepository->create($data);
     }
 
-    public function update(int $id, array $data)
+    public function update(array $data, int $id)
     {
-        return $this->catalogoBusquedaRepository->update($id, $data);
+        return $this->catalogoBusquedaRepository->update($data, $id);
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id_alerta)
     {
-        return $this->catalogoBusquedaRepository->delete($id);
-    }
-
-    public function obtenerDestacados()
-    {
-        // Asumiendo que el repositorio implementa una consulta filtrada
-        return $this->catalogoBusquedaRepository->all();
+        return $this->catalogoBusquedaRepository->delete($id_alerta);
     }
 }

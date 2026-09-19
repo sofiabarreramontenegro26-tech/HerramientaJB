@@ -10,14 +10,14 @@ class ConfiguracionAlertaService
         private ConfiguracionAlertaInterface $configuracionAlertaRepository
     ){}
 
-    public function list()
+    public function all()
     {
-        return $this->configuracionAlertaRepository->all();
+        return $this->configuracionAlertaRepository->getAll();
     }
 
     public function show(int $id)
     {
-        return $this->configuracionAlertaRepository->find($id);
+        return $this->configuracionAlertaRepository->getById($id);
     }
 
     public function store(array $data)
@@ -25,19 +25,14 @@ class ConfiguracionAlertaService
         return $this->configuracionAlertaRepository->create($data);
     }
 
-    public function update(int $id, array $data)
+    public function update(array $data, int $id)
     {
-        return $this->configuracionAlertaRepository->update($id, $data);
+        return $this->configuracionAlertaRepository->update($data, $id);
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id_configuracion)
     {
-        return $this->configuracionAlertaRepository->delete($id);
+        return $this->configuracionAlertaRepository->delete($id_configuracion);
     }
 
-    public function consultarAlertas()
-    {
-        // Lógica de negocio para calcular u obtener alertas configuradas
-        return $this->configuracionAlertaRepository->all();
-    }
 }

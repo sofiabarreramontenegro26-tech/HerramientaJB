@@ -10,14 +10,14 @@ class AlertaInventarioService
         private AlertaInventarioInterface $alertaInventarioRepository
     ) {}
 
-    public function list()
+    public function all()
     {
-        return $this->alertaInventarioRepository->all();
+        return $this->alertaInventarioRepository->getAll();
     }
 
     public function show(int $id)
     {
-        return $this->alertaInventarioRepository->find($id);
+        return $this->alertaInventarioRepository->getById($id);
     }
 
     public function store(array $data)
@@ -25,18 +25,13 @@ class AlertaInventarioService
         return $this->alertaInventarioRepository->create($data);
     }
 
-    public function update(int $id, array $data)
+    public function update(array $data, int $id)
     {
-        return $this->alertaInventarioRepository->update($id, $data);
+        return $this->alertaInventarioRepository->update($data, $id);
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id_alerta)
     {
-        return $this->alertaInventarioRepository->delete($id);
-    }
-
-    public function marcarComoLeida(int $id)
-    {
-        return $this->alertaInventarioRepository->update($id, ['leido' => true]);
+        return $this->alertaInventarioRepository->delete($id_alerta );
     }
 }

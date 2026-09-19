@@ -17,7 +17,7 @@ class ConfiguracionAlertaController extends Controller
 
     public function index()
     {
-        return response()->json($this->configuracionAlertaService->list(), 200);
+        return response()->json($this->configuracionAlertaService->all(), 200);
     }
 
     public function store(StoreConfiguracionAlertaRequest $request)
@@ -30,16 +30,18 @@ class ConfiguracionAlertaController extends Controller
         ], 201);
     }
 
-    public function show(int $id)
+    public function show(int $id_configuracion)
     {
-        $configuracionAlerta = $this->configuracionAlertaService->show($id);
+        $configuracionAlerta = $this->configuracionAlertaService->show((int) $id_configuracion);
 
         return response()->json($configuracionAlerta, 200);
     }
 
-    public function update(UpdateConfiguracionAlertaRequest $request, int $id)
+    public function update(UpdateConfiguracionAlertaRequest $request, $id_movimiento)
     {
-        $configuracion = $this->configuracionAlertaService->update($id, $request->validated());
+        $data = $request->validated();
+
+        $configuracion = $this->configuracionAlertaService->update($data, (int) $id_movimiento);
 
         return response()->json([
             'message' => 'Configuración de alerta actualizada correctamente',
@@ -47,21 +49,13 @@ class ConfiguracionAlertaController extends Controller
         ], 200);
     }
 
-    public function destroy(int $id)
+    public function destroy($id_movimiento)
     {
-        $this->configuracionAlertaService->destroy($id);
+        $this->configuracionAlertaService->destroy((int)$id_movimiento);
 
         return response()->json([
             'message' => 'Configuración de alerta eliminada correctamente'
         ], 200);
     }
 
-    public function consultarAlertas()
-    {
-        $alertas = $this->configuracionAlertaService->consultarAlertas();
-
-        return response()->json([
-            'data' => $alertas
-        ], 200);
-    }
 }

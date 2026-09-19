@@ -10,14 +10,14 @@ class EntradaService
         private EntradaInterface $entradaRepository
     ){}
 
-    public function list()
+    public function all()
     {
-        return $this->entradaRepository->all();
+        return $this->entradaRepository->getAll();
     }
 
     public function show(int $id)
     {
-        return $this->entradaRepository->find($id);
+        return $this->entradaRepository->getById($id);
     }
 
     public function store(array $data)
@@ -25,13 +25,13 @@ class EntradaService
         return $this->entradaRepository->create($data);
     }
 
-    public function update(int $id, array $data)
+    public function update(array $data, int $id)
     {
-        return $this->entradaRepository->update($id, $data);
+        return $this->entradaRepository->update($data, $id);
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id_entrada)
     {
-        return $this->entradaRepository->delete($id);
+        return $this->entradaRepository->delete($id_entrada);
     }
 }
