@@ -27,7 +27,7 @@ class MaquinaRepository extends BaseRepository implements MaquinaInterface
         return Maquina::create($data);
     }
 
-    public function update(array $data, int $id)
+    public function update(int $id, array $data)
     {
         $maquina = $this->getById($id);
         $maquina->update($data);

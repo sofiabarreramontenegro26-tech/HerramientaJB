@@ -27,7 +27,7 @@ class CatalogoBusquedaRepository extends BaseRepository implements CatalogoBusqu
         return CatalogoBusqueda::create($data);
     }
 
-    public function update(array $data, int $id)
+    public function update(int $id, array $data)
     {
         $catalogoBusqueda = $this->getById($id);
         $catalogoBusqueda->update($data);

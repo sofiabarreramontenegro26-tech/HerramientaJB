@@ -28,9 +28,9 @@ class HistorialActividadRepository extends BaseRepository implements HistorialAc
         return HistorialActividad::create($data);
     }
 
-    public function update(array $data, int $id_historial)
+    public function update(int $id, array $data)
     {
-        $historialActividad = $this->getById($id_historial);
+        $historialActividad = $this->getById($id);
         $historialActividad->update($data);
         
         return $historialActividad;

@@ -27,7 +27,7 @@ class ProductoFavoritoRepository extends BaseRepository implements ProductoFavor
         return ProductoFavorito::create($data);
     }
 
-    public function update(array $data, int $id)
+    public function update(int $id, array $data)
     {
         $productoFavorito = $this->getById($id);
         $productoFavorito->update($data);

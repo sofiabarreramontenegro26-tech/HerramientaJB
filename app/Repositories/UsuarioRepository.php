@@ -27,7 +27,7 @@ class UsuarioRepository extends BaseRepository implements UsuarioInterface
         return Usuario::create($data);
     }
 
-    public function update(array $data, int $id)
+    public function update(int $id, array $data)
     {
         $usuario = $this->getById($id);
         $usuario->update($data);

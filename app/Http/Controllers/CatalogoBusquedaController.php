@@ -42,7 +42,7 @@ class CatalogoBusquedaController extends Controller
         
         $data = $request->validated();
 
-        $catalogo = $this->catalogoService->update($data, (int) $id_catalogo);
+        $catalogo = $this->catalogoService->update((int) $id_catalogo, $data);
 
         return response()->json([
             'message' => 'Registro de catálogo actualizado correctamente',

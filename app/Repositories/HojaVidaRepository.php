@@ -27,7 +27,7 @@ class HojaVidaRepository extends BaseRepository implements HojaVidaInterface
         return HojaVida::create($data);
     }
 
-    public function update(array $data, int $id)
+    public function update(int $id, array $data)
     {
         $hojaVida = $this->getById($id);
         $hojaVida->update($data);

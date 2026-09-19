@@ -27,7 +27,7 @@ class CategoriaRepository extends BaseRepository implements CategoriaInterface
         return Categoria    ::create($data);
     }
 
-    public function update(array $data, int $id)
+    public function update(int $id, array $data)
     {
         $categoria = $this->getById($id);
         $categoria->update($data);

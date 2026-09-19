@@ -27,7 +27,7 @@ class EntradaRepository extends BaseRepository implements EntradaInterface
         return Entrada::create($data);
     }
 
-    public function update(array $data, int $id)
+    public function update(int $id, array $data)
     {
         $entrada = $this->getById($id);
         $entrada->update($data);
