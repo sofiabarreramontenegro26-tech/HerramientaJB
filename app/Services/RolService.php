@@ -25,7 +25,7 @@ class RolService
         return $this->rolRepository->create($data);
     }
 
-    public function update(array $data, int $id)
+    public function update(int $id, array $data)
     {
         return $this->rolRepository->update($data, $id);
     }

@@ -25,7 +25,7 @@ class HistorialActividadService
         return $this->historialActividadRepository->create($data);
     }
 
-    public function update(array $data, int $id_historial)
+    public function update(int $id, array $data)
     {
         return $this->historialActividadRepository->update($data, $id_historial);
     }

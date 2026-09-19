@@ -25,7 +25,7 @@ class UsuarioService
         return $this->usuarioRepository->create($data);
     }
 
-    public function update(array $data, int $id)
+    public function update(int $id, array $data)
     {
         return $this->usuarioRepository->update($data, $id);
     }

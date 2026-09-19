@@ -25,7 +25,7 @@ class ProveedorService
         return $this->proveedorRepository->create($data);
     }
 
-    public function update(array $data, int $id)
+    public function update(int $id, array $data)
     {
         return $this->proveedorRepository->update($data, $id);
     }

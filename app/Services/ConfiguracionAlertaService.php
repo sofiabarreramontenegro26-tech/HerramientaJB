@@ -25,7 +25,7 @@ class ConfiguracionAlertaService
         return $this->configuracionAlertaRepository->create($data);
     }
 
-    public function update(array $data, int $id)
+    public function update(int $id, array $data)
     {
         return $this->configuracionAlertaRepository->update($data, $id);
     }
