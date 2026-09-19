@@ -27,7 +27,7 @@ class ConfiguracionAlertaService
 
     public function update(int $id, array $data)
     {
-        return $this->configuracionAlertaRepository->update($data, $id);
+        return $this->configuracionAlertaRepository->update($id, $data);
     }
 
     public function destroy(int $id_configuracion)

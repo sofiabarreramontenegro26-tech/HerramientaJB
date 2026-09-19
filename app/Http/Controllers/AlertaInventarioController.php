@@ -41,7 +41,7 @@ class AlertaInventarioController extends Controller
     {
         $data = $request->validated();
     
-        $alerta = $this->alertaInventarioService->update((int) $id_alerta, $data);
+        $alerta = $this->alertaService->update((int) $id_alerta, $data);
 
         return response()->json([
             'message' => 'Alerta de inventario actualizada correctamente',

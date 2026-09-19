@@ -28,6 +28,7 @@ return new class extends Migration
 
             // created_at (Fecha de registro inicial) y updated_at (Fecha de actualización)
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

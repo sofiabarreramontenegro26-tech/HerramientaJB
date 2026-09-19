@@ -27,7 +27,7 @@ class UsuarioService
 
     public function update(int $id, array $data)
     {
-        return $this->usuarioRepository->update($data, $id);
+        return $this->usuarioRepository->update($id, $data);
     }
 
     public function destroy(int $id_usuario)

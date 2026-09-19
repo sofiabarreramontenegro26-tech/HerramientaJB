@@ -27,7 +27,7 @@ class ProductoService
 
     public function update(int $id, array $data)
     {
-        return $this->productoRepository->update($data, $id);
+        return $this->productoRepository->update($id, $data);
     }
 
     public function destroy(int $id_producto)

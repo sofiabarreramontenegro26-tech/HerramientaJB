@@ -27,7 +27,7 @@ class AlertaInventarioService
 
     public function update(int $id, array $data)
     {
-        return $this->alertaInventarioRepository->update($data, $id);
+        return $this->alertaInventarioRepository->update($id, $data);
     }
 
     public function destroy(int $id_alerta)

@@ -23,6 +23,7 @@ return new class extends Migration
 
             // timestamps hace dos
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

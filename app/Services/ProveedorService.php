@@ -27,7 +27,7 @@ class ProveedorService
 
     public function update(int $id, array $data)
     {
-        return $this->proveedorRepository->update($data, $id);
+        return $this->proveedorRepository->update($id, $data);
     }
 
     public function destroy(int $id_proveedor)

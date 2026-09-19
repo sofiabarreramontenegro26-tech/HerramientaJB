@@ -42,7 +42,7 @@ class RolController extends Controller
        
         $data = $request->validated();
 
-        $rol = $this->rolService->update($data, (int) $id_rol);
+        $rol = $this->rolService->update((int) $id_rol, $data);
 
         return response()->json([
             'message' => 'Rol actualizado correctamente.',

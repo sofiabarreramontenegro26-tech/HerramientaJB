@@ -27,7 +27,7 @@ class RolService
 
     public function update(int $id, array $data)
     {
-        return $this->rolRepository->update($data, $id);
+        return $this->rolRepository->update($id, $data);
     }
 
     public function destroy(int $id_rol)

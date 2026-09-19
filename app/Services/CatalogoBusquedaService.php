@@ -27,7 +27,7 @@ class CatalogoBusquedaService
 
     public function update(int $id, array $data)
     {
-        return $this->catalogoBusquedaRepository->update($data, $id);
+        return $this->catalogoBusquedaRepository->update($id, $data);
     }
 
     public function destroy(int $id_alerta)

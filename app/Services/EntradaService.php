@@ -27,7 +27,7 @@ class EntradaService
 
     public function update(int $id, array $data)
     {
-        return $this->entradaRepository->update($data, $id);
+        return $this->entradaRepository->update($id, $data);
     }
 
     public function destroy(int $id_entrada)

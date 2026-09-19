@@ -42,7 +42,7 @@ class MovimientoInventarioController extends Controller
 
         $data = $request->validated();
 
-        $movimientoInventario = $this->movimientoInventarioService->update($data, (int) $id_movimiento);
+        $movimientoInventario = $this->movimientoInventarioService->update((int) $id_movimiento, $data);
 
         return response()->json([
             'message' => 'Movimiento de inventario actualizado correctamente',
