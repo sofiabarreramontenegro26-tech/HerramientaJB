@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class RegistroConectividad extends Model
 {
-    use HasFactory; //HasFactory se va encargar de crear datos de prueba
-
+    use HasFactory,SoftDeletes;
     protected $table = "registros_conectividad";
 
     protected $primaryKey = "id_conectividad";
