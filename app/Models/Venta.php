@@ -2,25 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Venta extends Model
 {
-    use HasFactory,SoftDeletes;
+    use SoftDeletes;
 
-    protected $table = "ventas";
+    protected $table = 'ventas';
+    protected $primaryKey = 'id_venta';
 
-    protected $primaryKey = "id_venta";
-
-    protected $fillable = [
-        "cliente",
-        "fecha",
-        "total_venta",
-        "ganancia_total",
-        "id_usuario",
-    ];
+    protected $fillable = ['cliente', 'fecha', 'total_venta', 'ganancia_total', 'id_usuario'];
 
     protected $casts = [
         'fecha' => 'date',
@@ -28,8 +21,17 @@ class Venta extends Model
         'ganancia_total' => 'decimal:2',
     ];
 
-    public function usuario()
+    public function usuario(): BelongsTo
     {
-        return $this->belongsTo(Usuario::class, 'id_usuario', 'id_usuario');
+        return $this->belongsTo(Usuario::class, 'id_usuario', 'id_usuario')->withTrashed();
+    }
+
+    /**
+     * Texto que se guarda en movimiento_inventario.motivo para enlazar
+     * las salidas de stock con esta venta (la tabla ventas no tiene detalle).
+     */
+    public function motivoMovimiento(): string
+    {
+        return 'Venta #' . $this->id_venta;
     }
 }

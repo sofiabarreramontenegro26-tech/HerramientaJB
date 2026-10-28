@@ -2,30 +2,31 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AlertaInventario extends Model
 {
-    use HasFactory,SoftDeletes; 
+    use SoftDeletes;
 
-    protected $table = "alertas_inventario";
+    protected $table = 'alertas_inventario';
+    protected $primaryKey = 'id_alerta';
 
-    protected $primaryKey = "id_alerta"; 
-
-    protected $fillable = [
-        "id_producto",
-        "mensaje",
-        "leido",
-    ];
+    protected $fillable = ['id_producto', 'mensaje', 'leido'];
 
     protected $casts = [
-        'leido' => 'boolean', //verdadero/falso 
+        'leido' => 'boolean',
     ];
 
-    public function producto()
+    public function producto(): BelongsTo
     {
-        return $this->belongsTo(Producto::class, 'id_producto', 'id_producto');
+        return $this->belongsTo(Producto::class, 'id_producto', 'id_producto')->withTrashed();
+    }
+
+    public function scopeNoLeidas(Builder $query): Builder
+    {
+        return $query->where('leido', false);
     }
 }
