@@ -3,23 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Categoria extends Model
 {
-    use HasFactory,SoftDeletes;
+    use SoftDeletes;
 
-    protected $table = "categorias";
+    protected $table = 'categorias';
+    protected $primaryKey = 'id_categoria';
 
-    protected $primaryKey = "id_categoria";
+    protected $fillable = ['nombre', 'descripcion'];
 
-    protected $fillable = [
-        "nombre",
-        "descripcion"
-    ];
-
-    public function productos()
+    public function productos(): HasMany
     {
         return $this->hasMany(Producto::class, 'id_categoria', 'id_categoria');
     }

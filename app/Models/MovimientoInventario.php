@@ -3,29 +3,33 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class MovimientoInventario extends Model
 {
-    use HasFactory,SoftDeletes;
+    use SoftDeletes;
 
-    protected $table = "movimiento_inventario";
-    protected $primaryKey = "id_movimiento";
+    public const ENTRADA = 'ENTRADA';
+    public const SALIDA = 'SALIDA';
 
-    protected $fillable = [
-        'tipo',
-        'cantidad',
-        'motivo',
-        'fecha',
-        'id_producto',
-    ];
+    protected $table = 'movimiento_inventario';
+    protected $primaryKey = 'id_movimiento';
+
+    protected $fillable = ['tipo', 'cantidad', 'motivo', 'fecha', 'id_producto'];
 
     protected $casts = [
+        'cantidad' => 'integer',
         'fecha' => 'date',
     ];
 
-    public function producto()
+    public function producto(): BelongsTo
     {
-        return $this->belongsTo(Producto::class, 'id_producto', 'id_producto');
+        return $this->belongsTo(Producto::class, 'id_producto', 'id_producto')->withTrashed();
+    }
+
+    public function esEntrada(): bool
+    {
+        return $this->tipo === self::ENTRADA;
     }
 }

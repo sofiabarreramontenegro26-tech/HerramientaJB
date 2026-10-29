@@ -21,6 +21,7 @@ use App\Http\Controllers\ConfiguracionAlertaController;
 use App\Http\Controllers\AlertaInventarioController;
 use App\Http\Controllers\CatalogoBusquedaController;
 
+Route::name('api.')->group(function () {
 Route::apiResource('usuarios', UsuarioController::class);
 Route::apiResource('roles', RolController::class);
 Route::apiResource('productos', ProductoController::class);
@@ -94,5 +95,4 @@ Route::put('/catalogo-busquedas/{catalogo-busqueda}', [CatalogoBusquedaControlle
 Route::patch('/catalogo-busquedas/{catalogo-busqueda}', [CatalogoBusquedaController::class, 'update']);
 
 
-
-
+});
