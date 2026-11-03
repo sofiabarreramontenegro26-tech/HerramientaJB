@@ -27,10 +27,10 @@
             <div>
                 <p class="font-mono text-xs tracking-[0.3em] text-industrial uppercase">Sistema de gestión</p>
                 <h1 class="mt-4 font-display text-6xl leading-[0.95] font-bold tracking-tight text-slate-50 uppercase">
-                    Control total<br>del taller,<br><span class="text-industrial">sin papeles.</span>
+                    Control total<br>del taller,<br><span class="text-industrial"></span>
                 </h1>
                 <p class="mt-6 max-w-md text-slate-400">
-                    Inventario de repuestos, hojas de vida de maquinaria, mantenimientos, cotizaciones y ventas en un solo lugar.
+                    El centro de mando digital para la excelencia operacional de tu taller
                 </p>
             </div>
 
