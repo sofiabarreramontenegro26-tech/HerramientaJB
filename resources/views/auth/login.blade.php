@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Iniciar sesión · HerramientaJB</title>
 
+    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -27,7 +33,7 @@
             <div>
                 <p class="font-mono text-xs tracking-[0.3em] text-industrial uppercase">Sistema de gestión</p>
                 <h1 class="mt-4 font-display text-6xl leading-[0.95] font-bold tracking-tight text-slate-50 uppercase">
-                    Control total<br>del taller,<br><span class="text-industrial"></span>
+                    Control total<br>del taller.<br><span class="text-industrial"></span>
                 </h1>
                 <p class="mt-6 max-w-md text-slate-400">
                     El centro de mando digital para la excelencia operacional de tu taller
