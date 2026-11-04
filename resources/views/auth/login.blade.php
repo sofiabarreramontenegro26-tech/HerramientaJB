@@ -78,7 +78,11 @@
                     <button type="submit" class="btn btn-primario w-full py-2.5">Entrar al sistema</button>
                 </form>
 
-                <p class="mt-8 text-center text-xs text-slate-600">¿Olvidaste tu contraseña? Pídele al administrador que la cambie.</p>
+                <div class="mt-8 text-center">
+                    <a href="{{ route('password.request') }}" class="text-xs text-slate-500 hover:text-industrial transition-colors underline">
+                        ¿Olvidaste tu contraseña? Restablécela aquí
+                    </a>
+                </div>
             </div>
         </section>
     </div>

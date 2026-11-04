@@ -42,6 +42,14 @@ class Usuario extends Authenticatable
     {
         return (string) $this->getAttribute('contraseña');
     }
+    
+    /**
+     * Indica la columna de correo electrónico para el restablecimiento de contraseña.
+     */
+    public function getEmailForPasswordReset(): string
+    {
+        return $this->correo;
+    }
 
     public function rol(): BelongsTo
     {
