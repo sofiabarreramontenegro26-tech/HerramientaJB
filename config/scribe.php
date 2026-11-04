@@ -112,7 +112,7 @@ return [
         'default' => false,
 
         // Where is the auth value meant to be sent in a request?
-        'in' => AuthIn::BEARER->value,
+        'in' => 'bearer',
 
         // The name of the auth parameter (e.g. token, key, apiKey) or header (e.g. Authorization, Api-Key).
         'name' => 'key',
@@ -214,36 +214,31 @@ return [
     // Use removeStrategies() to remove an included strategy.
     'strategies' => [
         'metadata' => [
-            ...Defaults::METADATA_STRATEGIES,
+            \Knuckles\Scribe\Extracting\Strategies\Metadata\GetFromDocBlocks::class,
         ],
         'headers' => [
-            ...Defaults::HEADERS_STRATEGIES,
-            Strategies\StaticData::withSettings(data: [
-                'Content-Type' => 'application/json',
-                'Accept' => 'application/json',
-            ]),
+            \Knuckles\Scribe\Extracting\Strategies\Headers\GetFromRouteRules::class,
+            // \Knuckles\Scribe\Extracting\Strategies\StaticData::withSettings(data: [
+            //     'Content-Type' => 'application/json',
+            //     'Accept' => 'application/json',
+            // ]),
         ],
         'urlParameters' => [
-            ...Defaults::URL_PARAMETERS_STRATEGIES,
+            \Knuckles\Scribe\Extracting\Strategies\UrlParameters\GetFromUrlParamTag::class,
         ],
         'queryParameters' => [
-            ...Defaults::QUERY_PARAMETERS_STRATEGIES,
+            \Knuckles\Scribe\Extracting\Strategies\QueryParameters\GetFromQueryParamTag::class,
         ],
         'bodyParameters' => [
-            ...Defaults::BODY_PARAMETERS_STRATEGIES,
+            \Knuckles\Scribe\Extracting\Strategies\BodyParameters\GetFromFormRequest::class,
+            \Knuckles\Scribe\Extracting\Strategies\BodyParameters\GetFromCallServer::class,
         ],
-        'responses' => configureStrategy(
-            Defaults::RESPONSES_STRATEGIES,
-            Strategies\Responses\ResponseCalls::withSettings(
-                only: ['GET *'],
-                // Recommended: disable debug mode in response calls to avoid error stack traces in responses
-                config: [
-                    'app.debug' => false,
-                ]
-            )
-        ),
+        'responses' => [
+            \Knuckles\Scribe\Extracting\Strategies\Responses\UseTransformer::class,
+            \Knuckles\Scribe\Extracting\Strategies\Responses\UseApiResource::class,
+            \Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls::class,
+        ],
         'responseFields' => [
-            ...Defaults::RESPONSE_FIELDS_STRATEGIES,
         ],
     ],
 
