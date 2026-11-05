@@ -14,6 +14,11 @@ return [
     |
     */
 
+    'cloudinary' => [
+    'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+    'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET'),
+],
+
     'postmark' => [
         'key' => env('POSTMARK_API_KEY'),
     ],
