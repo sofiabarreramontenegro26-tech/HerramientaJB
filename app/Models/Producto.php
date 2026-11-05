@@ -86,6 +86,12 @@ class Producto extends Model
 
     public function getImagenUrlAttribute(): ?string
     {
-        return $this->imagen ? Storage::url($this->imagen) : null;
+        if (! $this->imagen) {
+        return null;
+        }
+
+        return str_starts_with($this->imagen, 'http')
+            ? $this->imagen
+            : Storage::url($this->imagen);  
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Services\CloudinaryService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductoRequest;
 use App\Models\Categoria;
@@ -17,7 +18,7 @@ use Illuminate\View\View;
 
 class ProductoController extends Controller
 {
-    public function __construct(private readonly InventarioService $inventario)
+    public function __construct(private readonly InventarioService $inventario, private readonly CloudinaryService $cloudinary)
     {
     }
 
@@ -47,7 +48,7 @@ class ProductoController extends Controller
         $datos = $request->safe()->except('imagen');
 
         if ($request->hasFile('imagen')) {
-            $datos['imagen'] = $request->file('imagen')->store('productos', 'public');
+            $datos['imagen'] = $this->cloudinary->subir($request->file('imagen'));
         }
 
         $producto = DB::transaction(function () use ($datos) {
@@ -71,16 +72,16 @@ class ProductoController extends Controller
     {
         return view('productos.form', $this->datosFormulario($producto));
     }
-
+    
     public function update(ProductoRequest $request, Producto $producto): RedirectResponse
     {
         $datos = $request->safe()->except('imagen');
 
         if ($request->hasFile('imagen')) {
-            if ($producto->imagen) {
+            if ($producto->imagen && ! str_starts_with($producto->imagen, 'http')) {
                 Storage::disk('public')->delete($producto->imagen);
             }
-            $datos['imagen'] = $request->file('imagen')->store('productos', 'public');
+            $datos['imagen'] = $this->cloudinary->subir($request->file('imagen'));
         }
 
         $producto->update($datos);
